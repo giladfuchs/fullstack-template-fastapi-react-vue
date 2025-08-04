@@ -4,7 +4,6 @@ from random import choice, randint
 from faker import Faker
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel import SQLModel
-from sqlmodel.ext.asyncio.session import AsyncSession
 
 from common.config import conf
 from common.db_model import DBModel

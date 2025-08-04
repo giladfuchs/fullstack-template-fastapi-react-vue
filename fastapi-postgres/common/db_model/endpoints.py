@@ -1,7 +1,7 @@
-from typing import Any, List, Union
+from typing import Any, List, Union, Callable
 
 from fastapi import Depends, Query
-from fastapi_crudrouter.core.databases import CALLABLE_LIST
+CALLABLE_LIST = Callable[..., List[Any]]
 from starlette.responses import JSONResponse
 
 from common.db_model import DBModel

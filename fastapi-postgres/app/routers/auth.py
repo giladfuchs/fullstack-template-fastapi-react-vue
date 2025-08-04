@@ -9,4 +9,6 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/login", response_model=Token)
 async def login(form_data: TeacherModel.table):
-    return await auth_service.authenticate_user(id=form_data.id, phone=form_data.phone)
+    return await auth_service.authenticate_user(
+        _id=int(form_data.id), phone=int(form_data.phone)
+    )

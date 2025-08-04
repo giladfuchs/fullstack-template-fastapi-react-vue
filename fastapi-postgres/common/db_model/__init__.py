@@ -1,10 +1,16 @@
-from typing import Any, List, Union
+from typing import Any, Dict, List, Union
+
+from pydantic import BaseModel
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import selectinload
-from sqlmodel import Session, create_engine, select
+from sqlmodel import Session, select
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from common.config import conf
 from common.serializers import BaseTable, DBQuery, FilterQuery
 from common.utils.errors import ErrorService
+from common.utils.log import logger
 from common.utils.parse_obj import set_elements_by_dict
 
 opts = {
@@ -21,46 +27,78 @@ opts = {
     "is_null": "is_",
 }
 
+
 class DBModel:
     table = None
-    engine = create_engine(conf.POSTGRES_DATABASE_URL, echo=False)
+    engine = create_async_engine(
+        conf.POSTGRES_DATABASE_URL,
+        echo=False,
+    )
 
     @classmethod
-    def add_update(cls, row: Union[BaseTable, List[BaseTable]]):
-        with Session(cls.engine) as session:
-            if type(row) == list:
-                for _ in row:
-                    try:
-                        session.add(_)
-                    except Exception as ex:
-                        print(ex, _)
-                session.commit()
-                for _ in row:
-                    session.refresh(_)
-            else:
-                session.add(row)
-                session.commit()
-                session.refresh(row)
+    async def add_update(cls, row: Union[BaseTable, List[BaseTable]], **kwargs):
+        async with AsyncSession(cls.engine) as session:
+            try:
+                if isinstance(row, list):
+                    merged_rows = []
+                    async with session.begin():
+                        for obj in row:
+                            merged = await session.merge(obj)
+                            merged_rows.append(merged)
+                    for obj in merged_rows:
+                        await session.refresh(obj)
+                else:
+                    async with session.begin():
+                        session.add(row)
+                    await session.refresh(row)
+
+            except Exception as ex:
+                await session.rollback()
+                logger.error(f"{row!s}: {ex}")
+                if isinstance(ex, IntegrityError):
+                    orig = str(getattr(ex, "orig", ""))
+                    if "UniqueViolationError" in orig:
+                        field = "unique"
+                        if "Key (" in orig:
+                            try:
+                                field = orig.split("Key (")[1].split(")=")[0]
+                            except Exception:
+                                pass
+                        ErrorService.error_400(details=f"unique:{field}")
+                else:
+                    ErrorService.error_400(details=ex)
 
     @classmethod
-    def add_or_find_update(
-            cls, add_or_id: str, body: BaseTable, **kwargs: Any
+    async def add_or_find_update(
+        cls,
+        add_or_id: Union[str, int],
+        body: Union[
+            BaseTable, BaseModel, Dict, List[Union[BaseTable, BaseModel, Dict]]
+        ],
+        **kwargs: Any,
     ) -> BaseTable:
-
         db_obj: BaseTable = body
         user_auth = kwargs.get("user_auth")
 
-        if add_or_id != "add":
-            db_obj: BaseTable = cls.get_by_id(_id=add_or_id)
+        if add_or_id != "add" and not isinstance(body, list):
+            db_obj = await cls.get_by_id(_id=add_or_id, **kwargs)
             if db_obj and (not user_auth or user_auth.id == db_obj.teacher_id):
-                set_elements_by_dict(db_obj, body, exclude_items=["id"])
+                set_elements_by_dict(db_obj, body, exclude_items=["id"], **kwargs)
             else:
                 ErrorService.error_400(details="not found")
 
-        elif user_auth:
-            setattr(db_obj, "teacher_id", user_auth.id)
+        elif (
+            add_or_id == "add"
+            and isinstance(body, BaseModel)
+            and not isinstance(body, BaseTable)
+        ):
+            db_obj = cls.table()
+            set_elements_by_dict(db_obj, body, **kwargs)
 
-        cls.add_update(row=db_obj)
+            if user_auth:
+                setattr(db_obj, "teacher_id", user_auth.id)
+
+        await cls.add_update(row=db_obj, **kwargs)
         return db_obj
 
     # Generate SQLAlchemy filter conditions with AND logic from a list of DBQuery objects
@@ -71,9 +109,7 @@ class DBModel:
             getattr(getattr(cls.table, q.key), opts.get(q.opt, q.opt))(q.value)
             for q in query
             if hasattr(cls.table, q.key)
-            and hasattr(
-                getattr(cls.table, q.key), opts.get(q.opt, q.opt)
-            )
+            and hasattr(getattr(cls.table, q.key), opts.get(q.opt, q.opt))
         )
         return ans
 
@@ -93,9 +129,13 @@ class DBModel:
                 col = getattr(cls.table, field, None)
                 if col:
                     direction = direction.lower()
-                    statement = statement.order_by(col.asc() if direction == "asc" else col.desc())
+                    statement = statement.order_by(
+                        col.asc() if direction == "asc" else col.desc()
+                    )
             except Exception:
-                raise ValueError(f"Invalid sort format: '{filter_query.sort}'. Expected 'field:asc' or 'field:desc'")
+                raise ValueError(
+                    f"Invalid sort format: '{filter_query.sort}'. Expected 'field:asc' or 'field:desc'"
+                )
 
         if offset:
             statement = statement.offset(offset)
@@ -106,20 +146,19 @@ class DBModel:
         return statement
 
     @classmethod
-    def fetch_rows(
-            cls,
-            filter_query: FilterQuery = FilterQuery(),
-            offset: int = 0,
-            limit: int = 1000,
-            to_dict: bool = False,
-            **kwargs
+    async def fetch_rows(
+        cls,
+        filter_query: FilterQuery = FilterQuery(),
+        offset: int = 0,
+        limit: int = 1000,
+        to_dict: bool = False,
+        **kwargs,
     ) -> Union["cls.table", List["cls.table"], dict, List[dict]]:
-
         statement = cls.build_query(filter_query, offset, limit)
 
         try:
-            with Session(cls.engine) as session:
-                results = session.exec(statement)
+            async with AsyncSession(cls.engine) as session:
+                results = await session.exec(statement)
                 res = (
                     [
                         _.dict(include_relations=filter_query.relation_model)
@@ -138,24 +177,23 @@ class DBModel:
         return res
 
     @classmethod
-    def delete_rows(
-            cls, filter_query: FilterQuery = FilterQuery(), offset: int = 0, **kwargs
+    async def delete_rows(
+        cls, filter_query: FilterQuery = FilterQuery(), offset: int = 0, **kwargs
     ):
         try:
-            with Session(cls.engine) as session:
+            async with AsyncSession(cls.engine) as session:
                 select_stmt = cls.build_query(filter_query, offset, limit=0)
-                results = session.exec(select_stmt).all()
+                results = (await session.exec(select_stmt)).all()
                 for obj in results:
-                    session.delete(obj)
-
-                session.commit()
-
+                    await session.delete(obj)
+                await session.commit()
         except Exception as ex:
             ErrorService.error_400(details=ex)
 
     @classmethod
-    def get_by_id(cls, _id: int or str, **kwargs):
+    async def get_by_id(cls, _id: Union[int, str], **kwargs):
         filter_query = FilterQuery(
-            query=[DBQuery(key="id", opt="eq", value=_id)], relation_model=False
+            query=[DBQuery(key=cls.table.id.key, opt="eq", value=int(_id))],
+            relation_model=kwargs.get("relation_model", False),
         )
-        return cls.fetch_rows(filter_query=filter_query, limit=1, **kwargs)
+        return await cls.fetch_rows(filter_query=filter_query, limit=1, **kwargs)

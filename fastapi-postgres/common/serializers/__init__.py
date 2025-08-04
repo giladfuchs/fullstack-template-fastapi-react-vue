@@ -5,8 +5,6 @@ from pydantic import Field as PydanticField
 from sqlmodel import Field, SQLModel
 
 
-
-
 class BaseModelUtil(BaseModel):
     def dict(self, *args, **kwargs):
         kwargs["exclude_none"] = True
@@ -26,7 +24,7 @@ class BaseTable(SQLModel):
                     continue
                 value = getattr(self, attr)
                 if isinstance(value, list) and all(
-                        isinstance(i, BaseTable) for i in value
+                    isinstance(i, BaseTable) for i in value
                 ):
                     base[attr] = [i.dict() for i in value]
                 elif isinstance(value, BaseTable):

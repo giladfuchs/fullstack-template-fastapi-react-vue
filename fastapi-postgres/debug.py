@@ -2,14 +2,14 @@
 if you want to run it without docker
 
  POSTGRES_DATABASE_URL = "postgresql://admin:admin@0.0.0.0:5432/postgres"
- docker run --name postgresql -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5432:5432   -d postgres
+ docker run --name postgresql -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5434:5432   -d postgres
 """
 
 import uvicorn
 
 from common.config import conf
 
-conf.POSTGRES_DATABASE_URL = "postgresql://admin:admin@0.0.0.0:5432/postgres"
+conf.POSTGRES_DATABASE_URL = "postgresql+asyncpg://admin:admin@0.0.0.0:5434/postgres"
 from app import create_app
 
 

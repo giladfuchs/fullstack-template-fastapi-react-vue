@@ -11,8 +11,8 @@ from common.serializers import DBQuery, FilterQuery, Token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
-def jwt_required(token: str = Depends(oauth2_scheme)) -> str:
-    user = AuthService.validate_token(token)
+async def jwt_required(token: str = Depends(oauth2_scheme)) -> str:
+    user = await AuthService.validate_token(token)
     return user
 
 
@@ -21,7 +21,9 @@ def user_filtered_query(field_name: str = "teacher_id"):
         filter_query: FilterQuery = Body(default=FilterQuery()),
         user_auth: TeacherModel.table = Depends(jwt_required),
     ) -> FilterQuery:
-        filter_query.query.append(DBQuery(key=field_name, opt="eq", value=user_auth.id))
+        filter_query.query.append(
+            DBQuery(key=field_name, opt="eq", value=int(user_auth.id))
+        )
         return filter_query
 
     return Depends(_inject_user_filter)
@@ -37,31 +39,33 @@ class AuthService:
         )
 
     @classmethod
-    async def authenticate_user(cls, id: int, phone: int) -> Token:
+    async def authenticate_user(cls, _id: int, phone: int) -> Token:
         filter_query = FilterQuery(
             query=[
-                DBQuery(key="id", opt="eq", value=id),
+                DBQuery(key="id", opt="eq", value=_id),
                 DBQuery(key="phone", opt="eq", value=phone),
             ]
         )
 
-        teacher: TeacherModel.table = TeacherModel.fetch_rows(
+        teacher: TeacherModel.table = await TeacherModel.fetch_rows(
             filter_query=filter_query, limit=1
         )
 
         if not teacher:
             raise cls.error_authenticate()
 
-        return cls.create_token(id)
+        return cls.create_token(_id)
 
     @classmethod
-    def validate_token(cls, token: str) -> TeacherModel.table:
+    async def validate_token(cls, token: str) -> TeacherModel.table:
         try:
             payload = jwt.decode(
                 token, conf.JWT_SECRET, algorithms=[conf.JWT_ALGORITHM]
             )
             _id = payload.get("id")
-            teacher: TeacherModel.table = TeacherModel.get_by_id(_id=_id)
+            teacher: TeacherModel.table = await TeacherModel.get_by_id(_id=_id)
+            if not teacher:
+                raise cls.error_authenticate()
             return teacher
 
         except (JWTError, Exception):

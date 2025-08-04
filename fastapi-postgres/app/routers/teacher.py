@@ -6,13 +6,14 @@ router = APIRouter(prefix="/teacher", tags=["teacher"])
 
 router.add_api_route(
     "",
-    TeacherModel._fetch_rows_callable(),
+    TeacherModel.fetch_rows_callable(),
     methods=["POST"],
     summary="Filter",
+    response_model=None,
 )
 router.add_api_route(
     "/{add_or_id}",
-    TeacherModel._add_or_find_update_callable(),
+    TeacherModel.add_or_find_update_callable(),
     methods=["POST"],
     summary="add_or_edit",
 )

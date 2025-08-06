@@ -10,6 +10,7 @@ import Locales from 'ui-component/layout/Locales';
 import { AuthProvider } from 'contexts/UseAuth';
 import AxiosInterceptor from './contexts/AxiosInterceptor';
 import Loader from './ui-component/layout/Loader';
+import RTLLayout from './ui-component/layout/RTLLayout';
 
 declare module '@mui/styles/defaultTheme' {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -23,15 +24,17 @@ const App = () => {
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={themes(customization)}>
                 <CssBaseline />
-                <Toaster richColors closeButton position="bottom-center" />
-                <Locales>
-                    <AuthProvider>
-                        <AxiosInterceptor>
-                            {loading && <Loader />}
-                            <Routes />
-                        </AxiosInterceptor>
-                    </AuthProvider>
-                </Locales>
+                <RTLLayout>
+                    <Toaster richColors closeButton position="bottom-center" />
+                    <Locales>
+                        <AuthProvider>
+                            <AxiosInterceptor>
+                                {loading && <Loader />}
+                                <Routes />
+                            </AxiosInterceptor>
+                        </AuthProvider>
+                    </Locales>
+                </RTLLayout>
             </ThemeProvider>
         </StyledEngineProvider>
     );

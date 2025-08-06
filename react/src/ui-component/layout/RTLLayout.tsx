@@ -1,15 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-// material-ui
 import { jssPreset, StylesProvider } from '@mui/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache, { StylisPlugin } from '@emotion/cache';
 
-// project imports
 import { DefaultRootStateProps } from 'types';
 
-// third-party
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 import rtlPlugin from 'stylis-plugin-rtl';

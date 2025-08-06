@@ -44,17 +44,7 @@
         "build": "react-scripts build",
         "prettier": "npx prettier --write ."
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "babel": {
-        "presets": [
-            "@babel/preset-react"
-        ]
-    },
+
     "browserslist": [
         "defaults",
         "not IE 11",

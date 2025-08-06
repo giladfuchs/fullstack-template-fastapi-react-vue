@@ -4,14 +4,15 @@ import axios from '@/common/axios';
 
 export const useAuthStore = defineStore({
   id: 'auth',
+  persist: {
+    enabled: true
+  },
   state: () => ({
     user_id: 0,
     student_id: 0,
     authenticated: false
   }),
-  persist: {
-    enabled: true
-  },
+
 
   actions: {
     async login(data: any = {}) {

@@ -10,6 +10,9 @@ const toast = useToast();
 const auth_store = useAuthStore();
 export const useGeneralStore = defineStore({
     id: 'general',
+    persist: {
+        enabled: true
+    },
     state: () => ({
         list: {
             [ModelType.teacher]: [],

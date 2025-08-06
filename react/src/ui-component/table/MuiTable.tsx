@@ -9,10 +9,11 @@ import { fetchRowsByModel } from '../../store/generalSlice';
 import { Link } from 'react-router-dom';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { FormattedMessage } from 'react-intl';
+import { AppDispatch } from '../../store';
 
 const MuiTable = ({ model }: { model: ModelType }) => {
     const cells = get_columns_mui_by_model(model);
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch<AppDispatch>();
 
     const rows = useSelector((state: DefaultRootStateProps) => state.general.models[model]);
 

@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { DefaultRootStateProps } from 'types';
 
-// third-party
 import { IntlProvider, MessageFormatElement } from 'react-intl';
 
-// load locales files
 const loadLocaleData = (locale: string) => {
     switch (locale) {
         case 'fr':

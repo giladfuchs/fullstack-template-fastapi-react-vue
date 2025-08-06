@@ -22,18 +22,21 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import MainCard from 'ui-component/cards/MainCard';
-import Transitions from 'ui-component/extended/Transitions';
+import Transitions from 'ui-component/layout/Transitions';
 import { useAuth } from 'contexts/UseAuth';
 import { DefaultRootStateProps } from 'types';
 import { IconLogout, IconSettings } from '@tabler/icons';
-import { TOGGLE_CUSTOMIZATION_DRAWER } from '../../../../store/actions';
+import Customization from '../../../Customization';
+import { setLocale } from '../../../../store/customizationReducer';
+import { AppDispatch } from '../../../../store';
 
 const ProfileSection = () => {
     const theme = useTheme();
     const customization = useSelector((state: DefaultRootStateProps) => state.customization);
 
     const { logout } = useAuth();
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch<AppDispatch>();
+
     const [open, setOpen] = React.useState(false);
     const [openLanguage, setOpenLanguage] = React.useState(false);
 
@@ -115,8 +118,8 @@ const ProfileSection = () => {
                 }}
             >
                 {({ TransitionProps }) => (
-                    <Transitions in={open} {...TransitionProps}>
-                        <Paper>
+                    <Transitions {...TransitionProps}>
+                        <Paper sx={{ maxWidth: '22rem' }}>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
                                     <Box sx={{ p: 2 }}>
@@ -143,20 +146,6 @@ const ProfileSection = () => {
                                                     }
                                                 }}
                                             >
-                                                {/* Theme Settings */}
-                                                <ListItemButton
-                                                    sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    onClick={() => {
-                                                        dispatch({ type: TOGGLE_CUSTOMIZATION_DRAWER, openDrawer: true });
-                                                        setOpen(false);
-                                                    }}
-                                                >
-                                                    <ListItemIcon>
-                                                        <IconSettings stroke={1.5} size="1.3rem" />
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant="body2">Theme Settings</Typography>} />
-                                                </ListItemButton>
-
                                                 {/* Language */}
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
@@ -182,7 +171,7 @@ const ProfileSection = () => {
                                                                 key={lng}
                                                                 sx={{ pl: 5 }}
                                                                 onClick={() => {
-                                                                    dispatch({ type: 'THEME_LOCALE', locale: lng });
+                                                                    dispatch(setLocale(lng));
                                                                     setOpen(false);
                                                                 }}
                                                             >
@@ -203,6 +192,12 @@ const ProfileSection = () => {
                                                     <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
                                                 </ListItemButton>
                                             </List>
+
+                                            <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
+                                                <Typography variant="h4">Theme Settings</Typography>
+                                                <IconSettings stroke={2} size="1.4rem" />
+                                            </Box>
+                                            <Customization />
                                         </Box>
                                     </PerfectScrollbar>
                                 </MainCard>

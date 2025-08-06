@@ -36,21 +36,39 @@ const delete_row = async (assignment_id: number) => {
         <ClipboardPlusIcon size="20"/>
       </v-btn>
     </template>
-    <template v-for="(assignment, i) in props.assignments" :key="i">
-      <UiChildCard :title="assignment.title" class="mb-4">
-        <v-card variant="outlined" class="bg-gray100">
-          <v-card-text>{{ assignment.detail }}</v-card-text>
-        </v-card>
-        <div class="d-flex justify-center mt-2">
-          <v-btn icon variant="text" size="x-small" density="compact" @click="delete_row(assignment.id)">
-            <TrashIcon size="20"/>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn icon variant="text" size="x-small" density="compact" class="ml-2" :to="`/assignment/${assignment.id}`">
-            <EditIcon size="20"/>
-          </v-btn>
-        </div>
-      </UiChildCard>
-    </template>
+    <v-row dense>
+      <v-col
+          v-for="(assignment, i) in props.assignments"
+          :key="i"
+          cols="12"
+          md="6"
+      >
+        <UiChildCard :title="assignment.title">
+            <v-card-text>{{ assignment.detail }}</v-card-text>
+          <v-card-actions class="d-flex justify-space-between px-2 pt-0">
+            <v-btn
+                icon
+                variant="text"
+                size="x-small"
+                density="compact"
+                color="warning"
+                @click="delete_row(assignment.id)"
+            >
+              <TrashIcon size="20" />
+            </v-btn>
+
+            <v-btn
+                icon
+                variant="text"
+                size="x-small"
+                density="compact"
+                :to="`/assignment/${assignment.id}`"
+            >
+              <EditIcon size="20" />
+            </v-btn>
+          </v-card-actions>
+        </UiChildCard>
+      </v-col>
+    </v-row>
   </UiParentCard>
 </template>

@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Box, Button, FormControl, FormHelperText, Grid, InputLabel, OutlinedInput, Typography } from '@mui/material';
 import { useAuth } from 'contexts/UseAuth';
-import AnimateButton from 'ui-component/extended/AnimateButton';
 import { ModelType } from '../../types';
 
 const Login = () => {
@@ -103,19 +102,17 @@ const Login = () => {
                         )}
 
                         <Box sx={{ mt: 2 }}>
-                            <AnimateButton>
-                                <Button
-                                    disableElevation
-                                    disabled={isSubmitting}
-                                    fullWidth
-                                    size="large"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                >
-                                    Sign in
-                                </Button>
-                            </AnimateButton>
+                            <Button
+                                disableElevation
+                                disabled={isSubmitting}
+                                fullWidth
+                                size="large"
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                            >
+                                Sign in
+                            </Button>
                         </Box>
                     </form>
                 )}

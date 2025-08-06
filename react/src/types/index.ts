@@ -46,18 +46,15 @@ export type NavItemType = {
 };
 
 export interface CustomizationStateProps {
-    isOpen: NavItemType[];
     type?: string;
     id?: string;
     navType: PaletteMode;
     presetColor: string;
     locale: string;
     rtlLayout: boolean;
-    opened: boolean;
     fontFamily: Property.FontFamily;
     borderRadius?: number;
     outlinedFilled: boolean;
-    openDrawer: boolean;
 }
 
 export interface DefaultRootStateProps {

@@ -1,17 +1,9 @@
-// color variants
 @import 'themes-vars.module.scss';
 
-// third-party
 @import '~react-perfect-scrollbar/dist/css/styles.css';
-@import '~slick-carousel/slick/slick.css';
-@import '~slick-carousel/slick/slick-theme.css';
 
 .slick-arrow:before {
     color: $grey500;
-}
-
-.fullscreen .react-images__blanket {
-    z-index: 1200;
 }
 
 .apexcharts-legend-series .apexcharts-legend-marker {

@@ -5,13 +5,15 @@ import API from '../utils/axios';
 import { setLoading } from 'store/generalSlice';
 import AuthContext from './UseAuth';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AppDispatch } from '../store';
 
 interface AxiosInterceptorProps {
     children: ReactNode;
 }
 
 const AxiosInterceptor = ({ children }: AxiosInterceptorProps) => {
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch<AppDispatch>();
+
     const authContext = useContext(AuthContext);
 
     useEffect(() => {

@@ -31,17 +31,6 @@
         "prefer-destructuring": 0,
         "no-unused-vars": 0,
         "@typescript-eslint/no-unused-vars": 0,
-        "prettier/prettier": [
-            2,
-            {
-                "bracketSpacing": true,
-                "printWidth": 140,
-                "singleQuote": true,
-                "trailingComma": "none",
-                "tabWidth": 4,
-                "useTabs": false,
-                "endOfLine": "lf"
-            }
-        ]
+        "prettier/prettier": "off"
     }
 }

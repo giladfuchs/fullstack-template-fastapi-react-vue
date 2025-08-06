@@ -4,7 +4,6 @@ import { useTheme, styled } from '@mui/material/styles';
 import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 import config from 'config';
-import AnimateButton from 'ui-component/extended/AnimateButton';
 
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 
@@ -90,11 +89,9 @@ const Error = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <AnimateButton>
-                                        <Button variant="contained" size="large" component={Link} to={config.defaultPath}>
-                                            <HomeTwoToneIcon sx={{ fontSize: '1.3rem', mr: 0.75 }} /> Home
-                                        </Button>
-                                    </AnimateButton>
+                                    <Button variant="contained" size="large" component={Link} to={config.defaultPath}>
+                                        <HomeTwoToneIcon sx={{ fontSize: '1.3rem', mr: 0.75 }} /> Home
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </ErrorWrapper>

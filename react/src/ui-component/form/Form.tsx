@@ -14,7 +14,7 @@ import MainCard from '../cards/MainCard';
 const Form = () => {
     const intl = useIntl();
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch: any = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { id, model } = useParams() as {
         id: string;

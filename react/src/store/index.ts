@@ -1,10 +1,29 @@
-import { createStore, applyMiddleware } from 'redux';
-import { thunk } from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from 'redux';
 
-import reducer from './reducer';
+import customizationReducer from './customizationReducer';
+import generalReducer from './generalSlice';
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const rootReducer = combineReducers({
+    customization: customizationReducer,
+    general: generalReducer
+});
 
-export default store;
-export type RootState = ReturnType<typeof store.getState>;
+const persistedReducer = persistReducer(
+    {
+        key: 'root',
+        storage,
+        whitelist: ['customization', 'general']
+    },
+    rootReducer
+);
+
+export const store = configureStore({
+    reducer: persistedReducer
+});
+
+export const persistor = persistStore(store);
+
 export type AppDispatch = typeof store.dispatch;

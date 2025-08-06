@@ -7,7 +7,6 @@ import { ChecksIcon } from 'vue-tabler-icons';
 const theme = useTheme();
 const customizer = useCustomizerStore();
 
-// themes color options
 const themeColors = ref([
   {
     name: 'PurpleTheme',
@@ -54,8 +53,6 @@ const fontFamily = ref(['Roboto', 'Poppins', 'Inter']);
 </script>
 
 <template style="z-index: 21">
-  <v-navigation-drawer app temporary elevation="10" location="right" v-model="customizer.Customizer_drawer" width="280">
-    <perfect-scrollbar style="height: 100%">
       <div class="pa-5">
         <v-row>
           <v-col cols="12">
@@ -108,8 +105,6 @@ const fontFamily = ref(['Roboto', 'Poppins', 'Inter']);
           </v-col>
         </v-row>
       </div>
-    </perfect-scrollbar>
-  </v-navigation-drawer>
 </template>
 
 <style lang="scss"></style>

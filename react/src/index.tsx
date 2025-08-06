@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import * as serviceWorker from 'serviceWorker';
+import { Analytics } from "@vercel/analytics/react";
 import App from 'App';
 import { store } from './store';
 
@@ -15,6 +16,7 @@ import config from 'config';
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter basename={config.basename}>
+        <Analytics />
             <App />
         </BrowserRouter>
     </Provider>,

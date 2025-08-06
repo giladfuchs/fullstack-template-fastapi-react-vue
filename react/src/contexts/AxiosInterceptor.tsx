@@ -23,7 +23,7 @@ const AxiosInterceptor = ({ children }: AxiosInterceptorProps) => {
                 return config;
             },
             (error: AxiosError) => {
-                toast.error(error.response?.data?.message || error.message || 'Something went wrong');
+                toast.error((error.response?.data as { message?: string })?.message || error.message || 'Something went wrong');
                 dispatch(setLoading(false));
                 return Promise.reject(error);
             }
@@ -36,7 +36,7 @@ const AxiosInterceptor = ({ children }: AxiosInterceptorProps) => {
             },
             (error: AxiosError) => {
                 dispatch(setLoading(false));
-                toast.error(error.response?.data?.message || error.message || 'Something went wrong');
+                toast.error((error.response?.data as { message?: string })?.message || error.message || 'Something went wrong');
                 if (error.response?.status === 401) {
                     authContext!.logout();
                 }

@@ -1,0 +1,34 @@
+# node modules
+node_modules/
+
+# build output
+dist/
+build/
+.next/
+
+# local environment files
+.env
+.env.*.local
+
+# log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE settings
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS and misc
+.DS_Store
+Thumbs.db
+
+# lock files (if you want to force one package manager)
+package-lock.json
+yarn.lock
+
+# eslint / prettier cache
+.eslintcache

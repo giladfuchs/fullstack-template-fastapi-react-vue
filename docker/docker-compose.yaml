@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgresql1
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "--auth=md5"
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    container_name: fastapi-backend
+    build:
+      context: ../fastapi-postgres
+      dockerfile: ../docker/Dockerfile_Fastapi
+    restart: always
+    command: bash start_server.sh
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://admin:admin@db:5434/postgres"
+    ports:
+      - "5001:80"
+
+
+  vue-frontend:
+    container_name: vue3-frontend
+    build:
+      context: ../vue3
+      dockerfile: ../docker/Dockerfile_Vue
+    restart: always
+    ports:
+      - "3030:80"
+    environment:
+      - VITE_API_URL=http://host.docker.internal:5001
+
+  react-frontend:
+    container_name: react-frontend
+    build:
+      context: ../react
+      dockerfile: ../docker/Dockerfile_React
+    restart: always
+    ports:
+      - "3040:80"
+    environment:
+      - REACT_APP_API_URL=http://host.docker.internal:5001
+
+volumes:
+  postgres_data:

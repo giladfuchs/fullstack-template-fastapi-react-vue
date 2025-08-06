@@ -22,18 +22,21 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import MainCard from 'ui-component/cards/MainCard';
-import Transitions from 'ui-component/extended/Transitions';
+import Transitions from 'ui-component/layout/Transitions';
 import { useAuth } from 'contexts/UseAuth';
 import { DefaultRootStateProps } from 'types';
 import { IconLogout, IconSettings } from '@tabler/icons';
 import Customization from '../../../Customization';
+import { setLocale } from '../../../../store/customizationReducer';
+import { AppDispatch } from '../../../../store';
 
 const ProfileSection = () => {
     const theme = useTheme();
     const customization = useSelector((state: DefaultRootStateProps) => state.customization);
 
     const { logout } = useAuth();
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch<AppDispatch>();
+
     const [open, setOpen] = React.useState(false);
     const [openLanguage, setOpenLanguage] = React.useState(false);
 
@@ -115,7 +118,7 @@ const ProfileSection = () => {
                 }}
             >
                 {({ TransitionProps }) => (
-                    <Transitions in={open} {...TransitionProps}>
+                    <Transitions {...TransitionProps}>
                         <Paper sx={{ maxWidth: '22rem' }}>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
@@ -168,7 +171,7 @@ const ProfileSection = () => {
                                                                 key={lng}
                                                                 sx={{ pl: 5 }}
                                                                 onClick={() => {
-                                                                    dispatch({ type: 'THEME_LOCALE', locale: lng });
+                                                                    dispatch(setLocale(lng));
                                                                     setOpen(false);
                                                                 }}
                                                             >

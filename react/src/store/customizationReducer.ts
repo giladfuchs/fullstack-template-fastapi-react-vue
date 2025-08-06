@@ -1,9 +1,10 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import config from 'config';
+import { CustomizationStateProps } from 'types';
+import { PaletteMode } from '@mui/material';
+import { Property } from 'csstype';
 
-import * as actionTypes from './actions';
-import { CustomizationStateProps, DefaultRootStateProps } from 'types';
-
-export const initialState: DefaultRootStateProps['customization'] = {
+const initialState: CustomizationStateProps = {
     fontFamily: config.fontFamily,
     borderRadius: config.borderRadius,
     outlinedFilled: config.outlinedFilled,
@@ -13,38 +14,28 @@ export const initialState: DefaultRootStateProps['customization'] = {
     rtlLayout: config.rtlLayout
 };
 
-const customizationReducer = (state = initialState, action: CustomizationStateProps) => {
-    switch (action.type) {
-        case actionTypes.MENU_TYPE:
-            return {
-                ...state,
-                navType: action.navType
-            };
-        case actionTypes.PRESET_COLORS:
-            return {
-                ...state,
-                presetColor: action.presetColor
-            };
-        case actionTypes.THEME_LOCALE:
-            return {
-                ...state,
-                locale: action.locale
-            };
-        case actionTypes.THEME_RTL:
-            return {
-                ...state,
-                rtlLayout: action.rtlLayout
-            };
-
-        case actionTypes.SET_FONT_FAMILY:
-            return {
-                ...state,
-                fontFamily: action.fontFamily
-            };
-
-        default:
-            return state;
+const customizationSlice = createSlice({
+    name: 'customization',
+    initialState,
+    reducers: {
+        setNavType(state, action: PayloadAction<PaletteMode>) {
+            state.navType = action.payload;
+        },
+        setPresetColor(state, action: PayloadAction<string>) {
+            state.presetColor = action.payload;
+        },
+        setLocale(state, action: PayloadAction<string>) {
+            state.locale = action.payload;
+        },
+        setRtlLayout(state, action: PayloadAction<boolean>) {
+            state.rtlLayout = action.payload;
+        },
+        setFontFamily(state, action: PayloadAction<Property.FontFamily>) {
+            state.fontFamily = action.payload;
+        }
     }
-};
+});
 
-export default customizationReducer;
+export const { setNavType, setPresetColor, setLocale, setRtlLayout, setFontFamily } = customizationSlice.actions;
+
+export default customizationSlice.reducer;

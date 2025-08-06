@@ -14,13 +14,15 @@ import { fetchRowsByModel } from '../../../store/generalSlice';
 import { Link, useParams } from 'react-router-dom';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useMemo } from 'react';
+import { AppDispatch } from '../../../store';
 
 export default function AGTable() {
     const params = useParams();
     const { model } = params as {
         model: ModelType;
     };
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch<AppDispatch>();
+
     const rows: AGTableModelType[] = useSelector((state: DefaultRootStateProps) => state.general.models[model] as AGTableModelType[]);
     const cols: ColDef<AGTableModelType>[] = useMemo(() => get_columns_ag_by_model(model), [model]);
     React.useEffect(() => {

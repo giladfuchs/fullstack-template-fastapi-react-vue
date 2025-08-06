@@ -29,7 +29,7 @@ import { array_obj_to_obj_with_key } from '../utils/transformation';
 
 const StudentProfile = ({ student }: { student: Student }) => {
     const intl = useIntl();
-    const dispatch = useDispatch<AppDispatch>(); // use your typed dispatch
+    const dispatch: any = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const handleDelete = async (id: number) => {
@@ -102,7 +102,7 @@ const StudentProfile = ({ student }: { student: Student }) => {
 
 const AssignmentCard = ({ assignments }: { assignments: Assignment[] }) => {
     const intl = useIntl();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch: any = useDispatch<AppDispatch>();
     const [localAssignments, setLocalAssignments] = useState<Assignment[]>(assignments);
 
     useEffect(() => {

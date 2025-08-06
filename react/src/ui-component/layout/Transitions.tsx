@@ -7,7 +7,6 @@ export interface TSProps {
     children?: ReactElement;
     position?: string;
     sx?: React.CSSProperties;
-    in?: boolean;
     type?: string;
     direction?: 'up' | 'right' | 'left' | 'down';
 

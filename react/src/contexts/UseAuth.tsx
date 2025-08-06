@@ -1,10 +1,11 @@
 import { ReactElement, createContext, useCallback, useEffect, useReducer, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../utils/axios';
-import { LOGIN, LOGOUT } from 'store/actions';
 import { authReducerActionProps, initialAuthContextProps } from 'types';
 import { AuthContextType } from 'types/auth';
 
+const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
 const initialState: initialAuthContextProps = {
     isLoggedIn: false,
     isInitialized: false

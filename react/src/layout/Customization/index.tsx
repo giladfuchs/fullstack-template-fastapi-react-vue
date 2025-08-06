@@ -6,7 +6,6 @@ import { IconChecks } from '@tabler/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import SubCard from 'ui-component/cards/SubCard';
-import { MENU_TYPE, PRESET_COLORS, SET_FONT_FAMILY, THEME_RTL } from 'store/actions';
 
 import colors from 'assets/scss/_themes-vars.module.scss';
 import theme1 from 'assets/scss/_theme1.module.scss';
@@ -18,18 +17,21 @@ import theme6 from 'assets/scss/_theme6.module.scss';
 
 import { StringColorProps, DefaultRootStateProps } from 'types';
 import config from '../../config';
+import { setFontFamily, setNavType, setPresetColor, setRtlLayout } from '../../store/customizationReducer';
+import { Property } from 'csstype';
+import { AppDispatch } from '../../store';
 
 const PresetColor = ({
     color,
     presetColor,
-    setPresetColor
+    setPresetColorState
 }: {
     color: StringColorProps;
     presetColor: string;
-    setPresetColor: (s: string) => void;
+    setPresetColorState: (s: string) => void;
 }) => (
     <Grid item>
-        <ButtonBase sx={{ borderRadius: '12px' }} onClick={() => setPresetColor(color?.id!)}>
+        <ButtonBase sx={{ borderRadius: '12px' }} onClick={() => setPresetColorState(color?.id!)}>
             <Avatar
                 variant="rounded"
                 color="inherit"
@@ -46,22 +48,22 @@ const PresetColor = ({
 
 const Customization = () => {
     const theme = useTheme();
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch<AppDispatch>();
     const customization = useSelector((state: DefaultRootStateProps) => state.customization);
 
-    const [navType, setNavType] = React.useState<PaletteMode>(customization.navType);
+    const [navType, setNavTypeState] = React.useState<PaletteMode>(customization.navType);
     useEffect(() => {
-        dispatch({ type: MENU_TYPE, navType });
+        dispatch(setNavType(navType));
     }, [dispatch, navType]);
 
-    const [presetColor, setPresetColor] = React.useState<string>(customization.presetColor);
+    const [presetColor, setPresetColorState] = React.useState<string>(customization.presetColor);
     useEffect(() => {
-        dispatch({ type: PRESET_COLORS, presetColor });
+        dispatch(setPresetColor(presetColor));
     }, [dispatch, presetColor]);
 
-    const [rtlLayout, setRtlLayout] = React.useState(customization.rtlLayout);
+    const [rtlLayout, setRtlLayoutState] = React.useState(customization.rtlLayout);
     const handleRtlLayout = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRtlLayout(event.target.checked);
+        setRtlLayoutState(event.target.checked);
     };
 
     if (customization.rtlLayout) {
@@ -71,7 +73,7 @@ const Customization = () => {
     }
 
     useEffect(() => {
-        dispatch({ type: THEME_RTL, rtlLayout });
+        dispatch(setRtlLayout(rtlLayout));
     }, [dispatch, rtlLayout]);
 
     let initialFont;
@@ -88,9 +90,9 @@ const Customization = () => {
             break;
     }
 
-    const [fontFamily, setFontFamily] = React.useState(initialFont);
+    const [fontFamily, setFontFamilyState] = React.useState(initialFont);
     useEffect(() => {
-        let newFont;
+        let newFont: Property.FontFamily;
         switch (fontFamily) {
             case 'Inter':
                 newFont = `'Inter', sans-serif`;
@@ -103,7 +105,7 @@ const Customization = () => {
                 newFont = `'Roboto', sans-serif`;
                 break;
         }
-        dispatch({ type: SET_FONT_FAMILY, fontFamily: newFont });
+        dispatch(setFontFamily(newFont));
     }, [dispatch, fontFamily]);
 
     const colorOptions = [
@@ -155,7 +157,7 @@ const Customization = () => {
                                 row
                                 aria-label="layout"
                                 value={navType}
-                                onChange={(e) => setNavType(e.target.value as PaletteMode)}
+                                onChange={(e) => setNavTypeState(e.target.value as PaletteMode)}
                                 name="row-radio-buttons-group"
                             >
                                 <FormControlLabel
@@ -197,7 +199,12 @@ const Customization = () => {
                     <SubCard title="Preset Color">
                         <Grid item container spacing={2} alignItems="center">
                             {colorOptions.map((color, index) => (
-                                <PresetColor key={index} color={color} presetColor={presetColor} setPresetColor={setPresetColor} />
+                                <PresetColor
+                                    key={index}
+                                    color={color}
+                                    presetColor={presetColor}
+                                    setPresetColorState={setPresetColorState}
+                                />
                             ))}
                         </Grid>
                     </SubCard>
@@ -208,7 +215,7 @@ const Customization = () => {
                             <RadioGroup
                                 aria-label="font-family"
                                 value={fontFamily}
-                                onChange={(e) => setFontFamily(e.target.value)}
+                                onChange={(e) => setFontFamilyState(e.target.value)}
                                 name="row-radio-buttons-group"
                             >
                                 <FormControlLabel

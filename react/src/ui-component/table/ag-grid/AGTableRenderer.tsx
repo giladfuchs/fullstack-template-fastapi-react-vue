@@ -4,6 +4,8 @@ import { AGTableModelType } from '../../../types/table';
 import AssignmentsRenderer from './renderer/AssignmentsRenderer';
 import ActionRenderer from './renderer/ActionRenderer';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { DefaultRootStateProps } from '../../../types';
 
 const defaultColDef: ColDef = {
     resizable: true,
@@ -13,6 +15,7 @@ const defaultColDef: ColDef = {
 
 const AGTableRenderer = ({ cols, rows }: { cols: ColDef<AGTableModelType>[]; rows: AGTableModelType[] }) => {
     const intl = useIntl();
+    const customization = useSelector((state: DefaultRootStateProps) => state.customization);
 
     const localizedCols: ColDef<AGTableModelType>[] = cols.map((col) => ({
         ...col,
@@ -20,13 +23,24 @@ const AGTableRenderer = ({ cols, rows }: { cols: ColDef<AGTableModelType>[]; row
     }));
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 600, width: '100%' }} data-testid="ag-table">
+        <div
+            className="ag-theme-alpine"
+            style={{
+                height: 600,
+                width: '100%',
+                overflowX: 'auto',
+                direction: customization.rtlLayout ? 'rtl' : 'ltr'
+            }}
+            data-testid="ag-table"
+        >
             <AgGridReact<AGTableModelType>
                 rowData={rows}
                 columnDefs={localizedCols}
                 defaultColDef={defaultColDef}
-                paginationPageSize={10}
-                rowSelection="multiple"
+                enableRtl={customization.rtlLayout}
+                ensureDomOrder
+                enableCellTextSelection
+                rowHeight={30}
                 frameworkComponents={{
                     AssignmentsRenderer,
                     ActionRenderer

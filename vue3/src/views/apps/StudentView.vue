@@ -35,7 +35,7 @@ const student = computed<Student>(() => store.list[ModelType.student][0]);
       <v-col cols="12" md="4" style="max-width: 25rem">
         <StudentProfile :student="student"/>
       </v-col>
-      <v-col cols="12" md="8" style="max-width: 35rem">
+      <v-col cols="12" md="8" style="max-width: 65rem">
         <AssignmentCards :assignments="student.assignments" @refresh="init"/>
       </v-col>
     </v-row>

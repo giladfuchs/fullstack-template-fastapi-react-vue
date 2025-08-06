@@ -1,87 +1,87 @@
 {
-  "name": "fullstack-react",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/cache": "^11.4.0",
-    "@emotion/react": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
-    "@mui/icons-material": "^5.0.3",
-    "@mui/material": "^5.0.3",
-    "@mui/styles": "^5.0.1",
-    "@reduxjs/toolkit": "^2.7.0",
-    "@tabler/icons": "^1.39.1",
-    "ag-grid-community": "^29.3.3",
-    "ag-grid-react": "^29.3.3",
-    "apexcharts": "^3.26.1",
-    "axios": "^0.21.1",
-    "csstype": "^3.0.8",
-    "formik": "^2.2.6",
-    "framer-motion": "^4.1.13",
-    "jss": "^10.7.1",
-    "jss-rtl": "^0.3.0",
-    "stylis-plugin-rtl": "^2.0.2",
-    "react": "^17.0.2",
-    "react-apexcharts": "^1.3.7",
-    "react-dom": "^17.0.2",
-    "react-intl": "^5.14.0",
-    "react-perfect-scrollbar": "^1.5.8",
-    "react-redux": "^7.1.0-rc.1",
-    "react-router-dom": "^6.0.0-beta.5",
-    "react-scripts": "^4.0.3",
-    "redux": "^4.0.5",
-    "redux-thunk": "^3.1.0",
-    "sonner": "^2.0.5",
-    "typescript": "^4.3.0",
-    "yup": "^0.32.9"
-  },
-  "resolutions": {
-    "ag-grid-react": "29.3.3",
-    "ag-grid-community": "29.3.3"
-  },
-  "scripts": {
-    "setup": "npm install --legacy-peer-deps",
-    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
-    "build": "react-scripts build"
-
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ]
-  },
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "not op_mini all"
-  ],
-  "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@types/react": "^17.0.24",
-    "@types/react-dom": "^17.0.9",
-    "@types/react-redux": "^7.1.16",
-    "@types/react-router-dom": "^5.3.0",
-    "@types/webpack-env": "^1.16.2",
-    "@typescript-eslint/eslint-plugin": "4.4.1",
-    "@typescript-eslint/parser": "^4.24.0",
-    "eslint": "^7.27.0",
-    "eslint-config-airbnb-typescript": "^12.3.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-react-app": "6.0.0",
-    "eslint-import-resolver-typescript": "2.4.0",
-    "eslint-plugin-flowtype": "^5.7.2",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-jsx-a11y": "6.3.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "7.20.3",
-    "eslint-plugin-react-hooks": "4.0.8",
-    "prettier": "2.2.1",
-    "sass": "^1.42.1"
-  }
+    "name": "fullstack-react",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "@emotion/cache": "^11.4.0",
+        "@emotion/react": "^11.4.0",
+        "@emotion/styled": "^11.3.0",
+        "@mui/icons-material": "^5.0.3",
+        "@mui/material": "^5.0.3",
+        "@mui/styles": "^5.0.1",
+        "@reduxjs/toolkit": "^2.7.0",
+        "@tabler/icons": "^1.39.1",
+        "ag-grid-community": "^29.3.3",
+        "ag-grid-react": "^29.3.3",
+        "apexcharts": "^3.26.1",
+        "axios": "^0.21.1",
+        "csstype": "^3.0.8",
+        "formik": "^2.2.6",
+        "framer-motion": "^4.1.13",
+        "jss": "^10.7.1",
+        "jss-rtl": "^0.3.0",
+        "stylis-plugin-rtl": "^2.0.2",
+        "react": "^17.0.2",
+        "react-apexcharts": "^1.3.7",
+        "react-dom": "^17.0.2",
+        "react-intl": "^5.14.0",
+        "react-perfect-scrollbar": "^1.5.8",
+        "react-redux": "^7.1.0-rc.1",
+        "react-router-dom": "^6.0.0-beta.5",
+        "react-scripts": "^4.0.3",
+        "redux": "^4.0.5",
+        "redux-thunk": "^3.1.0",
+        "sonner": "^2.0.5",
+        "typescript": "^4.3.0",
+        "yup": "^0.32.9"
+    },
+    "resolutions": {
+        "ag-grid-react": "29.3.3",
+        "ag-grid-community": "29.3.3"
+    },
+    "scripts": {
+        "setup": "npm install --legacy-peer-deps",
+        "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+        "build": "react-scripts build",
+        "prettier": "npx prettier --write ."
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-react"
+        ]
+    },
+    "browserslist": [
+        "defaults",
+        "not IE 11",
+        "not op_mini all"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.14.3",
+        "@types/react": "^17.0.24",
+        "@types/react-dom": "^17.0.9",
+        "@types/react-redux": "^7.1.16",
+        "@types/react-router-dom": "^5.3.0",
+        "@types/webpack-env": "^1.16.2",
+        "@typescript-eslint/eslint-plugin": "4.4.1",
+        "@typescript-eslint/parser": "^4.24.0",
+        "eslint": "^7.27.0",
+        "eslint-config-airbnb-typescript": "^12.3.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-config-react-app": "6.0.0",
+        "eslint-import-resolver-typescript": "2.4.0",
+        "eslint-plugin-flowtype": "^5.7.2",
+        "eslint-plugin-import": "^2.23.3",
+        "eslint-plugin-jsx-a11y": "6.3.1",
+        "eslint-plugin-prettier": "^3.4.0",
+        "eslint-plugin-react": "7.20.3",
+        "eslint-plugin-react-hooks": "4.0.8",
+        "prettier": "2.2.1",
+        "sass": "^1.42.1"
+    }
 }

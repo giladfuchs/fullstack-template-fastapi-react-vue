@@ -26,7 +26,7 @@ import Transitions from 'ui-component/extended/Transitions';
 import { useAuth } from 'contexts/UseAuth';
 import { DefaultRootStateProps } from 'types';
 import { IconLogout, IconSettings } from '@tabler/icons';
-import { TOGGLE_CUSTOMIZATION_DRAWER } from '../../../../store/actions';
+import Customization from '../../../Customization';
 
 const ProfileSection = () => {
     const theme = useTheme();
@@ -116,7 +116,7 @@ const ProfileSection = () => {
             >
                 {({ TransitionProps }) => (
                     <Transitions in={open} {...TransitionProps}>
-                        <Paper>
+                        <Paper sx={{ maxWidth: '22rem' }}>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
                                     <Box sx={{ p: 2 }}>
@@ -143,20 +143,6 @@ const ProfileSection = () => {
                                                     }
                                                 }}
                                             >
-                                                {/* Theme Settings */}
-                                                <ListItemButton
-                                                    sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    onClick={() => {
-                                                        dispatch({ type: TOGGLE_CUSTOMIZATION_DRAWER, openDrawer: true });
-                                                        setOpen(false);
-                                                    }}
-                                                >
-                                                    <ListItemIcon>
-                                                        <IconSettings stroke={1.5} size="1.3rem" />
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant="body2">Theme Settings</Typography>} />
-                                                </ListItemButton>
-
                                                 {/* Language */}
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
@@ -203,6 +189,12 @@ const ProfileSection = () => {
                                                     <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
                                                 </ListItemButton>
                                             </List>
+
+                                            <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
+                                                <Typography variant="h4">Theme Settings</Typography>
+                                                <IconSettings stroke={2} size="1.4rem" />
+                                            </Box>
+                                            <Customization />
                                         </Box>
                                     </PerfectScrollbar>
                                 </MainCard>

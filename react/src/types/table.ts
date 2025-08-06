@@ -37,6 +37,7 @@ export const get_columns_ag_by_model = (model: ModelType): ColDef<AGTableModelTy
 
     return columns as ColDef<AGTableModelType>[];
 };
+
 // -- MUI table ---
 export const teacher_columns = ['id', 'phone'];
 

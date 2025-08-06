@@ -1,13 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import { styled, useTheme, Theme } from '@mui/material/styles';
-import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, Box, CssBaseline, Toolbar } from '@mui/material';
 
 import Header from './Header';
-import Customization from '../Customization';
-import { SET_MENU } from 'store/actions';
 
 interface MainStyleProps {
     theme: Theme;
@@ -36,14 +33,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
 
 const MainLayout = () => {
     const theme = useTheme();
-    const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
-
-    const dispatch = useDispatch();
-
-    React.useEffect(() => {
-        dispatch({ type: SET_MENU, opened: !matchDownMd });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [matchDownMd]);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -66,7 +55,6 @@ const MainLayout = () => {
             <Main theme={theme}>
                 <Outlet />
             </Main>
-            <Customization />
         </Box>
     );
 };

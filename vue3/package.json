@@ -54,5 +54,10 @@
     "vue-cli-plugin-vuetify": "2.5.5",
     "vue-tsc": "^1.0.24",
     "vuetify-loader": "^2.0.0-alpha.9"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not op_mini all"
+  ]
 }

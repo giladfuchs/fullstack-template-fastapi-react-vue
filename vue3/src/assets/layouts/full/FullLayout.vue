@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import VerticalHeaderVue from '@/assets/layouts/full/vertical-header/VerticalHeader.vue';
-import Customizer from '@/assets/layouts/full/customizer/Customizer.vue';
 import { useCustomizerStore } from '@/common/stores/customizer';
 import { useAuthStore } from '@/common/stores/auth';
 
@@ -21,7 +20,6 @@ const auth_store: any = useAuthStore();
         customizer.inputBg ? 'inputWithbg' : ''
       ]"
     >
-      <Customizer />
 
       <VerticalHeaderVue v-if="auth_store.authenticated" />
 

@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import * as serviceWorker from 'serviceWorker';
-import { Analytics } from '@vercel/analytics/react';
+import { inject } from '@vercel/analytics';
 import App from 'App';
 import { store } from './store';
 
@@ -13,10 +13,10 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import config from 'config';
 
+inject();
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter basename={config.basename}>
-            <Analytics />
             <App />
         </BrowserRouter>
     </Provider>,

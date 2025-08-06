@@ -1,5 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { inject } from '@vercel/analytics';
+
 import App from './views/components/App.vue';
 import { router } from './common/router';
 import vuetify from './assets/layouts/plugins/vuetify';
@@ -41,3 +43,4 @@ app.use(Toast, {
 
 app.use(i18n);
 app.use(vuetify).mount('#app');
+inject();

@@ -45,7 +45,6 @@
         "build": "react-scripts build",
         "prettier": "npx prettier --write ."
     },
-
     "browserslist": [
         "defaults",
         "not IE 11",

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { DefaultRootStateProps } from 'types';
+import { DefaultRootStateProps } from '@/types';
 
 import { IntlProvider, MessageFormatElement } from 'react-intl';
 
 const loadLocaleData = (locale: string) => {
     switch (locale) {
         case 'fr':
-            return import('utils/locales/fr.json');
+            return import('@/utils/locales/fr.json');
         case 'ro':
-            return import('utils/locales/ro.json');
+            return import('@/utils/locales/ro.json');
         case 'zh':
-            return import('utils/locales/zh.json');
+            return import('@/utils/locales/zh.json');
         default:
-            return import('utils/locales/en.json');
+            return import('@/utils/locales/en.json');
     }
 };
 

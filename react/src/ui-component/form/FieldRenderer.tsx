@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, Autocomplete } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { FormField, FormType, FieldAutoComplete } from 'types/form';
+import { FormField, FormType, FieldAutoComplete } from '@/types/form';
 
 interface Props {
     field: FormField;

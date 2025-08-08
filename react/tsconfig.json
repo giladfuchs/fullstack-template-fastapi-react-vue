@@ -1,27 +1,27 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "esnext",
+        "target": "ES2020",
+        "module": "ESNext",
         "jsx": "react-jsx",
+
+        "moduleResolution": "Bundler",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+
         "strict": true,
-        "esModuleInterop": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "noUnusedLocals": false,
+        "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "noFallthroughCasesInSwitch": true,
-        "moduleResolution": "node",
+
+        "allowJs": true,
         "resolveJsonModule": true,
-        "isolatedModules": true,
+        "forceConsistentCasingInFileNames": true,
         "noEmit": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "strictNullChecks": true,
-        "types": ["node", "webpack-env"],
-        "typeRoots": ["./types"],
-        "baseUrl": "src"
+
+        "types": ["vite/client", "node"],
+        "typeRoots": ["./types"]
     },
     "include": ["src"],
     "exclude": ["node_modules", "build", "dist"]

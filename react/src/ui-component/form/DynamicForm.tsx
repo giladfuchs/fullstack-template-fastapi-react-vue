@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { Grid, Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import FieldRenderer from './FieldRenderer';
-import { FormField } from 'types/form';
+import { FormField } from '@/types/form';
 
 interface DynamicFormProps {
     title: string;

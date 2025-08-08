@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import config from 'config';
+import config from "@/config";
 import { CustomizationStateProps } from 'types';
 import { PaletteMode } from '@mui/material';
 import { Property } from 'csstype';

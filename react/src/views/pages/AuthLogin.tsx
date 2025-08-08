@@ -4,8 +4,8 @@ import { useTheme } from '@mui/material/styles';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Box, Button, FormControl, FormHelperText, Grid, InputLabel, OutlinedInput, Typography } from '@mui/material';
-import { useAuth } from 'contexts/UseAuth';
-import { ModelType } from '../../types';
+import { useAuth } from '@/contexts/UseAuth';
+import { ModelType } from '@/types';
 
 const Login = () => {
     const theme = useTheme();

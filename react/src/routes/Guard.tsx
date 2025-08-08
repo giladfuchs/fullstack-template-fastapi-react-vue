@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from 'contexts/UseAuth';
-import { GuardProps } from 'types';
+import { useAuth } from '@/contexts/UseAuth';
+import { GuardProps } from '@/types';
 import { useEffect } from 'react';
-import config from 'config';
+import config from '@/config';
 
 export const GuestGuard = ({ children }: GuardProps) => {
     const { isLoggedIn } = useAuth();

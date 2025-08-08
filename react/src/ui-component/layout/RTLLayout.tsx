@@ -1,42 +1,46 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+// src/ui-component/layout/RTLLayout.tsx
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { CacheProvider } from "@emotion/react";
+import createCache, { StylisPlugin } from "@emotion/cache";
+import rtlPlugin from "stylis-plugin-rtl";
+import { CssBaseline, ThemeProvider, StyledEngineProvider, createTheme } from "@mui/material";
+import themes from "@/themes"; // your existing theme factory
+import { DefaultRootStateProps } from "@/types";
 
-import { jssPreset, StylesProvider } from '@mui/styles';
-import { CacheProvider } from '@emotion/react';
-import createCache, { StylisPlugin } from '@emotion/cache';
-
-import { DefaultRootStateProps } from 'types';
-
-import { create } from 'jss';
-import rtl from 'jss-rtl';
-import rtlPlugin from 'stylis-plugin-rtl';
-
-const jss = create({
-    plugins: [...jssPreset().plugins, rtl()]
-});
-
-export interface RTLLayoutProps {
-    children: React.ReactNode;
-}
+export interface RTLLayoutProps { children: React.ReactNode; }
 
 const RTLLayout = ({ children }: RTLLayoutProps) => {
-    const customization = useSelector((state: DefaultRootStateProps) => state.customization);
-    if (customization.rtlLayout) {
-        document?.querySelector('html')?.setAttribute('dir', 'rtl');
-    } else {
-        document?.querySelector('html')?.removeAttribute('dir');
-    }
-    const cacheRtl = createCache({
-        key: customization.rtlLayout ? 'rtl' : 'css',
-        prepend: true,
-        stylisPlugins: customization.rtlLayout ? [rtlPlugin as StylisPlugin] : []
-    });
+    const customization = useSelector((s: DefaultRootStateProps) => s.customization);
+    const isRtl = !!customization.rtlLayout;
 
-    cacheRtl.compat = true;
+    if (isRtl) document?.querySelector("html")?.setAttribute("dir", "rtl");
+    else document?.querySelector("html")?.removeAttribute("dir");
+
+    const cache = useMemo(() => {
+        const c = createCache({
+            key: isRtl ? "mui-rtl" : "mui",
+            prepend: true,
+            stylisPlugins: isRtl ? [rtlPlugin as unknown as StylisPlugin] : [],
+        });
+        (c as any).compat = true;
+        return c;
+    }, [isRtl]);
+
+    const baseTheme = useMemo(() => themes(customization), [customization]);
+    const theme = useMemo(
+        () => createTheme({ ...baseTheme, direction: isRtl ? "rtl" : "ltr" }),
+        [baseTheme, isRtl]
+    );
 
     return (
-        <CacheProvider value={cacheRtl}>
-            <StylesProvider jss={jss}>{children}</StylesProvider>
+        <CacheProvider value={cache}>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    {children}
+                </ThemeProvider>
+            </StyledEngineProvider>
         </CacheProvider>
     );
 };

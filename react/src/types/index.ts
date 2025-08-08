@@ -9,6 +9,7 @@ import { ModelState } from '../store/generalSlice';
 
 export * from './general';
 export * from './table';
+export * from './form';
 
 export interface GenericCardProps {
     title?: string;

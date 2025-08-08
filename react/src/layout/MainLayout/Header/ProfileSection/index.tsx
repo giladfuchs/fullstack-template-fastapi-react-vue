@@ -21,14 +21,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import MainCard from 'ui-component/cards/MainCard';
-import Transitions from 'ui-component/layout/Transitions';
-import { useAuth } from 'contexts/UseAuth';
-import { DefaultRootStateProps } from 'types';
+import MainCard from '@/ui-component/cards/MainCard';
+import Transitions from '@/ui-component/layout/Transitions';
+import { useAuth } from '@/contexts/UseAuth';
+import { DefaultRootStateProps } from '@/types';
 import { IconLogout, IconSettings } from '@tabler/icons';
 import Customization from '../../../Customization';
-import { setLocale } from '../../../../store/customizationReducer';
-import { AppDispatch } from '../../../../store';
+import { setLocale } from '@/store/customizationReducer';
+import { AppDispatch } from '@/store';
 
 const ProfileSection = () => {
     const theme = useTheme();

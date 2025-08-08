@@ -3,11 +3,11 @@ import { Toaster } from 'sonner';
 import { ThemeProvider, Theme } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
-import Routes from 'routes';
-import { DefaultRootStateProps } from 'types';
-import themes from 'themes';
-import Locales from 'ui-component/layout/Locales';
-import { AuthProvider } from 'contexts/UseAuth';
+import Routes from '@/routes';
+import { DefaultRootStateProps } from '@/types';
+import themes from '@/themes';
+import Locales from '@/ui-component/layout/Locales';
+import { AuthProvider } from '@/contexts/UseAuth';
 import AxiosInterceptor from './contexts/AxiosInterceptor';
 import Loader from './ui-component/layout/Loader';
 import RTLLayout from './ui-component/layout/RTLLayout';

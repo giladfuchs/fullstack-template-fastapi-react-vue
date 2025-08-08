@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useTheme, styled } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery, Box } from '@mui/material';
-import MainCard, { MainCardProps } from 'ui-component/cards/MainCard';
+import MainCard, { MainCardProps } from '@/ui-component/cards/MainCard';
 import AuthLogin from './AuthLogin';
-import Logo from 'ui-component/layout/Logo';
+import Logo from '@/ui-component/layout/Logo';
 import MuiTable from '../../ui-component/table/MuiTable';
 import { ModelType } from '../../types';
 

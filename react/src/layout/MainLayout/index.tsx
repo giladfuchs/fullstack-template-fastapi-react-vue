@@ -1,34 +1,21 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-
-import { styled, useTheme, Theme } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { AppBar, Box, CssBaseline, Toolbar } from '@mui/material';
-
 import Header from './Header';
 
-interface MainStyleProps {
-    theme: Theme;
-}
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme }: MainStyleProps) => ({
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme }) => ({
     ...theme.typography.mainContent,
-
-    ...{
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen
-        }),
-        marginLeft: 0,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-        width: `calc(100% - 260px)`,
-        [theme.breakpoints.down('md')]: {
-            marginLeft: '20px'
-        },
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: '10px'
-        }
-    }
+    transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    width: `calc(100% - 260px)`,
+    [theme.breakpoints.down('md')]: { marginLeft: '20px' },
+    [theme.breakpoints.down('sm')]: { marginLeft: '10px' }
 }));
 
 const MainLayout = () => {
@@ -51,8 +38,7 @@ const MainLayout = () => {
                     <Header />
                 </Toolbar>
             </AppBar>
-
-            <Main theme={theme}>
+            <Main>
                 <Outlet />
             </Main>
         </Box>

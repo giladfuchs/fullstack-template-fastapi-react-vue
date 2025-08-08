@@ -5,21 +5,21 @@ import { Avatar, ButtonBase, FormControl, FormControlLabel, FormLabel, Grid, Rad
 import { IconChecks } from '@tabler/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import SubCard from 'ui-component/cards/SubCard';
+import SubCard from '@/ui-component/cards/SubCard';
 
-import colors from 'assets/scss/_themes-vars.module.scss';
-import theme1 from 'assets/scss/_theme1.module.scss';
-import theme2 from 'assets/scss/_theme2.module.scss';
-import theme3 from 'assets/scss/_theme3.module.scss';
-import theme4 from 'assets/scss/_theme4.module.scss';
-import theme5 from 'assets/scss/_theme5.module.scss';
-import theme6 from 'assets/scss/_theme6.module.scss';
+import colors from '@/assets/scss/_themes-vars.module.scss';
+import theme1 from '@/assets/scss/_theme1.module.scss';
+import theme2 from '@/assets/scss/_theme2.module.scss';
+import theme3 from '@/assets/scss/_theme3.module.scss';
+import theme4 from '@/assets/scss/_theme4.module.scss';
+import theme5 from '@/assets/scss/_theme5.module.scss';
+import theme6 from '@/assets/scss/_theme6.module.scss';
 
-import { StringColorProps, DefaultRootStateProps } from 'types';
-import config from '../../config';
-import { setFontFamily, setNavType, setPresetColor, setRtlLayout } from '../../store/customizationReducer';
+import { StringColorProps, DefaultRootStateProps } from '@/types';
+import config from '@/config';
+import { setFontFamily, setNavType, setPresetColor, setRtlLayout } from '@/store/customizationReducer';
 import { Property } from 'csstype';
-import { AppDispatch } from '../../store';
+import { AppDispatch } from '@/store';
 
 const PresetColor = ({
     color,

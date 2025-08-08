@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { IconButton, Paper } from '@mui/material';
 
-import MainCard from 'ui-component/cards/MainCard';
+import MainCard from '@/ui-component/cards/MainCard';
 import { FormattedMessage } from 'react-intl';
 
 import AGTableRenderer from './AGTableRenderer';

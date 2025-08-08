@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Grid, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import MainCard from 'ui-component/cards/MainCard';
+import MainCard from '@/ui-component/cards/MainCard';
 
-import { DefaultRootStateProps, get_columns_mui_by_model, ModelType } from 'types';
+import { DefaultRootStateProps, get_columns_mui_by_model, ModelType } from '@/types';
 
-import { fetchRowsByModel } from '../../store/generalSlice';
+import { fetchRowsByModel } from '@/store/generalSlice';
 import { Link } from 'react-router-dom';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { FormattedMessage } from 'react-intl';
-import { AppDispatch } from '../../store';
+import { AppDispatch } from '@/store';
 
 const MuiTable = ({ model }: { model: ModelType }) => {
     const cells = get_columns_mui_by_model(model);

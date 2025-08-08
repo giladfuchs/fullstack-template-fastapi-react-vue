@@ -2,10 +2,10 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useContext, ReactNode } from 'react';
 import { toast } from 'sonner';
 import API from '../utils/axios';
-import { setLoading } from 'store/generalSlice';
+import { setLoading } from '@/store/generalSlice';
 import AuthContext from './UseAuth';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { AppDispatch } from '../store';
+import { AppDispatch } from '@/store';
 
 interface AxiosInterceptorProps {
     children: ReactNode;

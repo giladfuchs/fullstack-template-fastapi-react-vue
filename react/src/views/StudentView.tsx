@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import MainCard from 'ui-component/cards/MainCard';
-import SubCard from 'ui-component/cards/SubCard';
+import MainCard from '@/ui-component/cards/MainCard';
+import SubCard from '@/ui-component/cards/SubCard';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
@@ -135,7 +135,7 @@ const AssignmentCard = ({ assignments }: { assignments: Assignment[] }) => {
         >
             <Grid container spacing={2}>
                 {localAssignments.map((assignment: Assignment) => (
-                    <Grid item xs={12} sm={6} md={4} key={assignment.id}>
+                    <Grid xs={12} sm={6} md={4} key={assignment.id}>
                         <SubCard contentSX={{ p: 2 }}>
                             <Typography variant="h3" color="textPrimary" sx={{ fontWeight: 'bold' }}>
                                 {assignment.title}
@@ -145,12 +145,12 @@ const AssignmentCard = ({ assignments }: { assignments: Assignment[] }) => {
                                 {assignment.detail}
                             </Typography>
                             <Grid container spacing={2} justifyContent="center" sx={{ mt: 0.2 }}>
-                                <Grid item>
+                                <Grid>
                                     <IconButton size="small" color="error" onClick={() => handleDelete(assignment.id)}>
                                         <DeleteIcon fontSize="small" />
                                     </IconButton>
                                 </Grid>
-                                <Grid item>
+                                <Grid>
                                     <IconButton
                                         size="small"
                                         color="secondary"

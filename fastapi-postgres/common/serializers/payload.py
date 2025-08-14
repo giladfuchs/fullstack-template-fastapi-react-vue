@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -6,6 +6,7 @@ from common.enums import Grade
 
 
 class AssignmentPayload(BaseModel):
+    id: Optional[int]
     title: str
     detail: str
     student_id: int

@@ -10,13 +10,15 @@ import PerfectScrollbar from 'vue3-perfect-scrollbar';
 import VueTablerIcons from 'vue-tabler-icons';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import piniaPersist from 'pinia-plugin-persist';
 
 import Vue3EasyDataTable from 'vue3-easy-data-table';
+import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 import { createI18n } from 'vue-i18n';
-
 import messages from '@/assets/locales/messages';
-import piniaPersist from 'pinia-plugin-persist';
 
 const i18n = createI18n({
   locale: 'en',

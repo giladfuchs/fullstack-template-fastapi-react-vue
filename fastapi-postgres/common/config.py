@@ -1,6 +1,7 @@
 import os
 
 try:
+    # only in local
     from dotenv import load_dotenv
 
     load_dotenv()
@@ -15,7 +16,6 @@ DATABASE_URL_PROD = os.environ.get("DATABASE_URL")
 
 DATABASE_URL = DATABASE_URL_LOCAL if IS_LOCAL else DATABASE_URL_PROD
 
-#     flyctl proxy 5432 -a full-stack-db
 if IS_LOCAL:
     DATABASE_URL = DATABASE_URL
 

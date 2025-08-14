@@ -8,7 +8,7 @@ import AGTableBase from '@/views/components/table/ag_table/AGTableBase.vue';
 
 import {get_columns_ag_by_model, type AGTableModelType, ModelType} from '@/common/types';
 import {useGeneralStore} from '@/common/stores/general';
-import {ColDef} from 'ag-grid-community';
+import type {ColDef} from 'ag-grid-community';
 
 const store = useGeneralStore();
 const route = useRoute();

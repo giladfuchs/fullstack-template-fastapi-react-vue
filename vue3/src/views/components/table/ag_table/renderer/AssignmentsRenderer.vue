@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ICellRendererParams } from 'ag-grid-community';
+
+import type { ICellRendererParams } from 'ag-grid-community';
 
 import AssignmentsHover from '@/views/components/general/AssignmentsHover.vue';
 

@@ -1,0 +1,28 @@
+{
+    "name": "Name",
+    "id": "ID",
+    "phone": "Phone",
+    "grade": "Grade",
+    "title": "Title",
+    "detail": "Detail",
+    "form_header_add_teacher": "Add Teacher",
+    "form_header_add_student": "Add Student",
+    "form_header_add_assignment": "Add Assignment",
+    "form_header_edit_student": "Edit Student",
+    "form_header_edit_assignment": "Edit Assignment",
+    "form.button.submit": "Submit",
+    "form.button.back": "← Back",
+    "student_table": "Students",
+    "teacher_table": "Teachers",
+    "assignment_table": "Assignments",
+
+    "ag.header.name": "Name",
+    "ag.header.phone": "Phone",
+    "ag.header.grade": "Grade",
+    "ag.header.assignments": "Assignments",
+    "ag.header.id": "View",
+    "success.delete.student": "Student deleted successfully\nAlso all of their assignments were deleted.",
+    "success.delete.assignment": "Assignment deleted successfully",
+    "toast.create_success": "Successfully created {model}",
+    "toast.edit_success": "Successfully updated {model}"
+}

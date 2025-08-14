@@ -1,0 +1,12 @@
+node_modules
+**/node_modules
+dist
+build
+.git
+.gitignore
+.vscode
+.idea
+.env
+npm-debug.log*
+pnpm-debug.log*
+.eslintcache

@@ -7,10 +7,10 @@ import App from './views/components/App.vue';
 import { router } from './common/router';
 import vuetify from './assets/layouts/plugins/vuetify';
 import '@/assets/layouts/scss/style.scss';
-import PerfectScrollbar from 'vue3-perfect-scrollbar';
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import VueTablerIcons from 'vue-tabler-icons';
 import Toast from 'vue-toastification';
-import 'vue-toastification/dist/index.css';
+
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 import Vue3EasyDataTable from 'vue3-easy-data-table';
@@ -35,10 +35,9 @@ pinia.use(piniaPluginPersistedstate);
 const app = createApp(App);
 app.use(router);
 app.component('EasyDataTable', Vue3EasyDataTable);
-app.use(PerfectScrollbar);
+app.component('PerfectScrollbar', PerfectScrollbar);
 app.use(pinia);
 app.use(VueTablerIcons);
-
 app.use(Toast, {
   position: 'bottom-center',
   timeout: 3000,
@@ -46,7 +45,6 @@ app.use(Toast, {
   pauseOnHover: false,
   pauseOnFocusLoss: false
 });
-
 app.use(i18n);
 app.use(vuetify).mount('#app');
 inject();

@@ -3,8 +3,7 @@ import { ref } from 'vue';
 
 import { AgGridVue } from 'ag-grid-vue3';
 import type { ColDef, GridApi } from 'ag-grid-community';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+
 import { useCustomizerStore } from '@/common/stores/customizer';
 import ActionRenderer from '@/views/components/table/ag_table/renderer/ActionRenderer.vue';
 import AssignmentsRenderer from '@/views/components/table/ag_table/renderer/AssignmentsRenderer.vue';

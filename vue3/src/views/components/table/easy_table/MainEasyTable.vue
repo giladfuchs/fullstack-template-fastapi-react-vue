@@ -3,7 +3,6 @@ import { ref, computed } from 'vue';
 import UiParentCard from '@/views/components/shared/UiParentCard.vue';
 
 import type { Header } from 'vue3-easy-data-table';
-import 'vue3-easy-data-table/dist/style.css';
 import { ModelType } from '@/common/types';
 import { get_columns_easy_table_by_model } from '@/common/types';
 import { useI18n } from 'vue-i18n';

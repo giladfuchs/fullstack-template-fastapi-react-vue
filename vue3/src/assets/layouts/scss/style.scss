@@ -10,4 +10,8 @@
 
 @import './pages/datatable';
 
-@import '../../../../node_modules/vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css';
+@import '../../../../node_modules/vue3-perfect-scrollbar/dist/style.css';
+@import 'vue-toastification/dist/index.css';
+@import 'vue3-easy-data-table/dist/style.css';
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';

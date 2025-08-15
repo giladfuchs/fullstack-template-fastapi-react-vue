@@ -3,10 +3,8 @@
 @use 'sass:meta';
 @use '../../../../node_modules/vuetify/lib/styles/tools/functions' as *;
 
-// This will false all colors which is not necessory for theme
 $color-pack: false;
 
-// Global font size and border radius
 $font-size-root: 1rem;
 $border-radius-root: 12px;
 $body-font-family: 'Roboto', sans-serif !default;
@@ -14,7 +12,6 @@ $heading-font-family: $body-font-family !default;
 $btn-font-weight: 400 !default;
 $btn-letter-spacing: 0 !default;
 
-// Global Radius as per breakeven point
 $rounded: () !default;
 $rounded: map-deep-merge(
   (
@@ -30,7 +27,6 @@ $rounded: map-deep-merge(
   ),
   $rounded
 );
-// Global Typography
 $typography: () !default;
 $typography: map-deep-merge(
   (
@@ -112,13 +108,10 @@ $typography: map-deep-merge(
   $typography
 );
 
-// Custom Variables
-// colors
 $white: #fff !default;
 
-// cards
 $card-item-spacer-xy: 20px 24px !default;
 $card-text-spacer: 24px !default;
 $card-title-size: 18px !default;
-// Global Shadow
+
 $box-shadow: 1px 0 20px rgb(0 0 0 / 8%);

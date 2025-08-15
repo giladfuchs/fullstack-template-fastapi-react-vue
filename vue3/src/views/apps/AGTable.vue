@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {ref, computed, onMounted, watch} from 'vue';
-import {useRoute} from 'vue-router';
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 import UiParentCard from '@/views/components/shared/UiParentCard.vue';
 import AGTableHeader from '@/views/components/table/ag_table/AGTableHeader.vue';
 import AGTableBase from '@/views/components/table/ag_table/AGTableBase.vue';
 
-import {get_columns_ag_by_model, type AGTableModelType, ModelType} from '@/common/types';
-import {useGeneralStore} from '@/common/stores/general';
-import type {ColDef} from 'ag-grid-community';
+import { get_columns_ag_by_model, type AGTableModelType, ModelType } from '@/common/types';
+import { useGeneralStore } from '@/common/stores/general';
+import type { ColDef } from 'ag-grid-community';
 
 const store = useGeneralStore();
 const route = useRoute();
@@ -32,7 +32,7 @@ const itemsSearching = computed(() => {
 
 const init = async () => {
   if (model.value) {
-    await store.fetch_rows(model.value, {relation_model: true});
+    await store.fetch_rows(model.value, { relation_model: true });
   }
 };
 
@@ -44,8 +44,8 @@ watch(model, init);
   <v-row style="height: 50rem" v-if="model && rows">
     <v-col cols="12">
       <UiParentCard>
-        <AGTableHeader ref="ref_header_table" v-bind="{ child: ref_base_table, model, columns }"/>
-        <AGTableBase ref="ref_base_table" v-bind="{ columns, rows: itemsSearching }"/>
+        <AGTableHeader ref="ref_header_table" v-bind="{ child: ref_base_table, model, columns }" />
+        <AGTableBase ref="ref_base_table" v-bind="{ columns, rows: itemsSearching }" />
       </UiParentCard>
     </v-col>
   </v-row>

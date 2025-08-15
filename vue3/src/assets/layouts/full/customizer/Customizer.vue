@@ -53,58 +53,58 @@ const fontFamily = ref(['Roboto', 'Poppins', 'Inter']);
 </script>
 
 <template style="z-index: 21">
-      <div class="pa-5">
-        <v-row>
-          <v-col cols="12">
-            <v-card variant="outlined">
-              <v-card-item class="py-3">
-                <v-card-title class="text-subtitle-1 font-weight-medium">Preset Color</v-card-title>
-              </v-card-item>
-              <v-divider class="border-light"></v-divider>
-              <v-card-text>
-                <v-item-group mandatory v-model="customizer.actTheme">
-                  <v-item v-slot="{ isSelected, toggle }" v-for="theme in themeColors" :key="theme.name" :value="theme.name">
-                    <v-avatar rounded="sm" :class="theme.bg" class="mr-2 cursor-pointer ma-2" size="40" @click="toggle">
-                      <ChecksIcon color="white" v-if="isSelected" />
-                    </v-avatar>
-                  </v-item>
-                </v-item-group>
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col cols="12">
-            <v-card variant="outlined">
-              <v-card-item class="py-3">
-                <v-card-title class="text-subtitle-1 font-weight-medium">Dark Preset Color</v-card-title>
-              </v-card-item>
-              <v-divider class="border-light"></v-divider>
-              <v-card-text>
-                <v-item-group mandatory v-model="customizer.actTheme">
-                  <v-item v-slot="{ isSelected, toggle }" v-for="theme in DarkthemeColors" :key="theme.name" :value="theme.name">
-                    <v-avatar rounded="sm" :class="theme.bg" class="mr-2 cursor-pointer ma-2" size="40" @click="toggle">
-                      <ChecksIcon color="white" v-if="isSelected" />
-                    </v-avatar>
-                  </v-item>
-                </v-item-group>
-              </v-card-text>
-            </v-card>
-          </v-col>
+  <div class="pa-5">
+    <v-row>
+      <v-col cols="12">
+        <v-card variant="outlined">
+          <v-card-item class="py-3">
+            <v-card-title class="text-subtitle-1 font-weight-medium">Preset Color</v-card-title>
+          </v-card-item>
+          <v-divider class="border-light"></v-divider>
+          <v-card-text>
+            <v-item-group mandatory v-model="customizer.actTheme">
+              <v-item v-slot="{ isSelected, toggle }" v-for="theme in themeColors" :key="theme.name" :value="theme.name">
+                <v-avatar rounded="sm" :class="theme.bg" class="mr-2 cursor-pointer ma-2" size="40" @click="toggle">
+                  <ChecksIcon color="white" v-if="isSelected" />
+                </v-avatar>
+              </v-item>
+            </v-item-group>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12">
+        <v-card variant="outlined">
+          <v-card-item class="py-3">
+            <v-card-title class="text-subtitle-1 font-weight-medium">Dark Preset Color</v-card-title>
+          </v-card-item>
+          <v-divider class="border-light"></v-divider>
+          <v-card-text>
+            <v-item-group mandatory v-model="customizer.actTheme">
+              <v-item v-slot="{ isSelected, toggle }" v-for="theme in DarkthemeColors" :key="theme.name" :value="theme.name">
+                <v-avatar rounded="sm" :class="theme.bg" class="mr-2 cursor-pointer ma-2" size="40" @click="toggle">
+                  <ChecksIcon color="white" v-if="isSelected" />
+                </v-avatar>
+              </v-item>
+            </v-item-group>
+          </v-card-text>
+        </v-card>
+      </v-col>
 
-          <v-col cols="12">
-            <v-card variant="outlined">
-              <v-card-item class="py-3">
-                <v-card-title class="text-subtitle-1 font-weight-medium">Font Family</v-card-title>
-              </v-card-item>
-              <v-divider class="border-light"></v-divider>
-              <v-card-text>
-                <v-radio-group v-model="customizer.fontTheme" hide-details>
-                  <v-radio v-for="font in fontFamily" :key="font" :label="font" :value="font" color="primary"></v-radio>
-                </v-radio-group>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
+      <v-col cols="12">
+        <v-card variant="outlined">
+          <v-card-item class="py-3">
+            <v-card-title class="text-subtitle-1 font-weight-medium">Font Family</v-card-title>
+          </v-card-item>
+          <v-divider class="border-light"></v-divider>
+          <v-card-text>
+            <v-radio-group v-model="customizer.fontTheme" hide-details>
+              <v-radio v-for="font in fontFamily" :key="font" :label="font" :value="font" color="primary"></v-radio>
+            </v-radio-group>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <style lang="scss"></style>

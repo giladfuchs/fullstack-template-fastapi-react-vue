@@ -43,43 +43,34 @@ const onSubmit = async () => {
 
   <v-form ref="formRef" class="mt-7 loginForm" @submit.prevent="onSubmit">
     <v-text-field
-        v-model="id"
-        :label="$t('id')"
-        class="mt-4 mb-8"
-        required
-        :rules="idRules"
-        density="comfortable"
-        hide-details="auto"
-        variant="outlined"
-        type="number"
-        color="primary"
+      v-model="id"
+      :label="$t('id')"
+      class="mt-4 mb-8"
+      required
+      :rules="idRules"
+      density="comfortable"
+      hide-details="auto"
+      variant="outlined"
+      type="number"
+      color="primary"
     />
 
     <v-text-field
-        v-model="phone"
-        :label="$t('phone')"
-        required
-        :rules="phoneRules"
-        density="comfortable"
-        variant="outlined"
-        color="primary"
-        hide-details="auto"
-        type="number"
-        class="pwdInput"
+      v-model="phone"
+      :label="$t('phone')"
+      required
+      :rules="phoneRules"
+      density="comfortable"
+      variant="outlined"
+      color="primary"
+      hide-details="auto"
+      type="number"
+      class="pwdInput"
     />
 
     <div class="d-sm-flex align-center mt-2 mb-7 mb-sm-0"></div>
 
-    <v-btn
-        color="secondary"
-        :loading="isSubmitting"
-        block
-        class="mt-2"
-        variant="flat"
-        size="large"
-        :disabled="isSubmitting"
-        type="submit"
-    >
+    <v-btn color="secondary" :loading="isSubmitting" block class="mt-2" variant="flat" size="large" :disabled="isSubmitting" type="submit">
       {{ $t('Sign In') }}
     </v-btn>
 
@@ -90,11 +81,7 @@ const onSubmit = async () => {
 
   <div class="mt-5 text-right">
     <v-divider />
-    <v-btn
-        variant="plain"
-        to="/teacher/add"
-        class="mt-2 text-capitalize mr-n2"
-    >
+    <v-btn variant="plain" to="/teacher/add" class="mt-2 text-capitalize mr-n2">
       {{ $t("Don't Have an account?") }}
     </v-btn>
   </div>

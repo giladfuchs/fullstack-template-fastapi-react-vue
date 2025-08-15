@@ -1,15 +1,11 @@
+@use '../variables' as *;
 html {
   overflow-y: auto;
 }
 .v-main {
   margin-right: 20px;
 }
-.horizontalLayout {
-  .v-main {
-    margin-right: 20px;
-    margin-left: 20px;
-  }
-}
+
 @media (max-width: 1279px) {
   .v-main {
     margin: 0 10px;
@@ -65,9 +61,6 @@ $sizes: (
   }
 }
 
-
-
-
 .w-100 {
   width: 100%;
 }
@@ -78,13 +71,6 @@ $sizes: (
 .gap-2 {
   gap: 8px;
 }
-
-
-
-
-
-
-
 
 .themeBluePurple,
 .themeDarkPurple {
@@ -119,8 +105,6 @@ $sizes: (
   background: linear-gradient(135deg, rgb(63 81 181) 50%, rgb(63, 81, 181) 50%);
 }
 
-// font family
-
 body {
   .Poppins {
     font-family: 'Poppins', sans-serif !important;
@@ -130,7 +114,6 @@ body {
     font-family: 'Inter', sans-serif !important;
   }
 }
-
 
 @keyframes blink {
   50% {
@@ -166,10 +149,6 @@ body {
   }
 }
 
-
-
-
-
 .link {
   color: rgb(var(--v-theme-lightText));
   text-decoration: none;
@@ -177,4 +156,3 @@ body {
     color: rgb(var(--v-theme-primary));
   }
 }
-

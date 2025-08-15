@@ -61,21 +61,18 @@ defineExpose({ exportDataAsCsv });
 
 <template>
   <ag-grid-vue
-      :class="`ag-theme-alpine`"
-      :style="{ height: (props.rows.length > 10 ? 550 : props.rows.length > 6 ? 400 : 300) + 'px' }"
-      :columnDefs="localizedCols"
-      :rowData="props.rows"
-      :rowHeight="40"
-      :defaultColDef="defaultColDef"
-      :gridOptions="gridOptions"
-      :components="gridComponents"
-      @grid-ready="onGridReady"
-      @first-data-rendered="onFirstDataRendered"
-      v-if="props.rows"
+    :class="`ag-theme-alpine`"
+    :style="{ height: (props.rows.length > 10 ? 550 : props.rows.length > 6 ? 400 : 300) + 'px' }"
+    :columnDefs="localizedCols"
+    :rowData="props.rows"
+    :rowHeight="40"
+    :defaultColDef="defaultColDef"
+    :gridOptions="gridOptions"
+    :components="gridComponents"
+    @grid-ready="onGridReady"
+    @first-data-rendered="onFirstDataRendered"
+    v-if="props.rows"
   />
-
-
-
 </template>
 
 <style scoped lang="scss">
@@ -83,5 +80,4 @@ defineExpose({ exportDataAsCsv });
 .ag-theme-quartz {
   --ag-input-icon-color: transparent;
 }
-
 </style>

@@ -11,7 +11,6 @@ export const useAuthStore = defineStore({
     authenticated: false
   }),
 
-
   actions: {
     async login(data: any = {}) {
       try {

@@ -1,15 +1,16 @@
 @use 'variables' as *;
-@import 'vuetify/styles/main.sass';
-@import 'layout/container';
-@import 'layout/topbar';
 
-@import 'components/VButtons';
-@import 'components/VCard';
-@import 'components/VTextField';
-@import 'components/VTextarea';
+@use 'vuetify/styles/main.sass';
+@use 'layout/container' as *;
+@use 'layout/topbar' as *;
 
-@import './pages/datatable';
+@use 'components/VButtons' as *;
+@use 'components/VCard' as *;
+@use 'components/VText' as *;
 
+@use './pages/datatable' as *;
+
+@import '@mdi/font/css/materialdesignicons.css';
 @import '../../../../node_modules/vue3-perfect-scrollbar/dist/style.css';
 @import 'vue-toastification/dist/index.css';
 @import 'vue3-easy-data-table/dist/style.css';

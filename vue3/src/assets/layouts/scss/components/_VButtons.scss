@@ -1,6 +1,4 @@
-//
-// Light Buttons
-//
+@use '../variables' as *;
 
 .v-btn {
   &.bg-lightprimary {
@@ -19,15 +17,9 @@
       color: $white !important;
     }
   }
-
-
 }
 
 .v-btn {
   text-transform: capitalize;
   letter-spacing: $btn-letter-spacing;
-}
-
-.v-btn-group .v-btn {
-  height: inherit !important;
 }

@@ -4,7 +4,7 @@ import { PhoneIcon, SchoolIcon } from 'vue-tabler-icons';
 import { ModelType, type Student } from '@/common/types';
 import { useGeneralStore } from '@/common/stores/general';
 import UiParentCard from '@/views/components/shared/UiParentCard.vue';
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 interface Props {
@@ -17,9 +17,13 @@ const props = defineProps<Props>();
 
 const student = computed(() => props.student);
 const delete_row = async () => {
-  await store.delete_rows(ModelType.student, {
-    query: [{ key: 'id', value: student.value.id, opt: 'eq' }],
-  },t(`success.delete.${ModelType.student}`));
+  await store.delete_rows(
+    ModelType.student,
+    {
+      query: [{ key: 'id', value: student.value.id, opt: 'eq' }]
+    },
+    t(`success.delete.${ModelType.student}`)
+  );
 };
 const items = ref([
   { text: 'Phone', icon: PhoneIcon, divider: true },

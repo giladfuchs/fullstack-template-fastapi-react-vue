@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .customize-table {
   border-radius: $border-radius-root;
   .vue3-easy-data-table__main,

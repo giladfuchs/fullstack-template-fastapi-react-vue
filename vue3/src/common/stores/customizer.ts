@@ -6,14 +6,11 @@ export const useCustomizerStore = defineStore({
   persist: true,
   state: () => ({
     mini_sidebar: config.mini_sidebar,
-    setHorizontalLayout: config.setHorizontalLayout,
     actTheme: config.actTheme,
     fontTheme: config.fontTheme,
-    inputBg: config.inputBg,
     boxed: config.boxed,
     loading: false
   }),
 
-  getters: {},
-
+  getters: {}
 });

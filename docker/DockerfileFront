@@ -1,23 +1,21 @@
-# ---- build ----
 FROM node:22-slim AS builder
 WORKDIR /app
 ENV PNPM_HOME=/root/.local/share/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 RUN corepack enable
 
-# pass Vite envs at BUILD TIME (VITE_* are baked into the bundle)
 ARG VITE_API_URL
 ENV VITE_API_URL=${VITE_API_URL}
 
-COPY package.json pnpm-lock.yaml ./
+ARG APP_DIR
+COPY ${APP_DIR}/package.json ${APP_DIR}/pnpm-lock.yaml ./
 RUN pnpm i --frozen-lockfile
-COPY . .
+COPY ${APP_DIR}/ ./
 RUN pnpm build
 
-# ---- run ----
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /app/dist ./
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx","-g","daemon off;"]

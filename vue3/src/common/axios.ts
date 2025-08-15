@@ -31,7 +31,6 @@ axiosServices.interceptors.request.use(
   }
 );
 
-// interceptor for http
 axiosServices.interceptors.response.use(
   (response) => {
     const customizer = useCustomizerStore();

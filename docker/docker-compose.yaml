@@ -20,7 +20,7 @@ services:
     container_name: fastapi-backend
     build:
       context: ../fastapi-postgres
-      dockerfile: ../docker/Dockerfile_Fastapi
+      dockerfile: ../docker/DockerfileFastapi
     restart: always
     command: bash start_server.sh
     depends_on:
@@ -32,9 +32,10 @@ services:
   vue-frontend:
     container_name: vue3-frontend
     build:
-      context: ../vue3
-      dockerfile: ../docker/Dockerfile_Vue
+      context: ..
+      dockerfile: docker/DockerfileFront
       args:
+        APP_DIR: "vue3"
         VITE_API_URL: "http://localhost:5001"
     restart: always
     ports:
@@ -43,14 +44,16 @@ services:
   react-frontend:
     container_name: react-frontend
     build:
-      context: ../react
-      dockerfile: ../docker/Dockerfile_React
+      context: ..
+      dockerfile: docker/DockerfileFront
       args:
+        APP_DIR: "react"
         VITE_API_URL: "http://localhost:5001"
-
-
     restart: always
     ports:
       - "3040:80"
+
+
+
 volumes:
   postgres_data:

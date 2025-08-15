@@ -1,6 +1,6 @@
 import { Grade, InputType, ModelType } from '@/common/types/index';
 import { array_to_dict, deep_copy_stringify } from '@/common/helper';
-import _ from 'lodash';
+
 export interface InputField {
   value: any;
   options?: string[];
@@ -65,7 +65,9 @@ export const get_form_by_model = (model: ModelType) => {
 };
 
 export const create_form_fields = (source: inputFilters, target: inputFilters): inputFilters => {
-  if (_.isEmpty(target)) return source;
+  if (!target || Object.keys(target).length === 0) {
+    return source;
+  }
   const source_res = deep_copy_stringify(source) as inputFilters;
   return array_to_dict(
     Object.keys(source_res).map((key: string) => {

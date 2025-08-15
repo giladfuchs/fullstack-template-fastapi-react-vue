@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { inject } from '@vercel/analytics';
+import 'vuetify/styles';
 
 import App from './views/components/App.vue';
 import { router } from './common/router';
@@ -10,7 +11,7 @@ import PerfectScrollbar from 'vue3-perfect-scrollbar';
 import VueTablerIcons from 'vue-tabler-icons';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
-import piniaPersist from 'pinia-plugin-persist';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 import Vue3EasyDataTable from 'vue3-easy-data-table';
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
@@ -28,11 +29,14 @@ const i18n = createI18n({
   silentFallbackWarn: true
 });
 
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+
 const app = createApp(App);
 app.use(router);
 app.component('EasyDataTable', Vue3EasyDataTable);
 app.use(PerfectScrollbar);
-app.use(createPinia().use(piniaPersist));
+app.use(pinia);
 app.use(VueTablerIcons);
 
 app.use(Toast, {

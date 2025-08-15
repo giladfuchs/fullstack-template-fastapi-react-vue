@@ -15,13 +15,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  css: {
-    preprocessorOptions: {
-      scss: {}
-    }
-  },
   optimizeDeps: {
-    exclude: ['vuetify'],
+    include: ['vuetify'],
     entries: ['./src/**/*.vue']
-  }
+  },
+  ssr: { noExternal: ['vuetify'] }
 });

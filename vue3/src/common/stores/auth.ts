@@ -4,9 +4,7 @@ import axios from '@/common/axios';
 
 export const useAuthStore = defineStore({
   id: 'auth',
-  persist: {
-    enabled: true
-  },
+  persist: true,
   state: () => ({
     user_id: 0,
     student_id: 0,

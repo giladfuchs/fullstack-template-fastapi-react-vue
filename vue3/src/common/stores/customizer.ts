@@ -3,9 +3,7 @@ import config from '@/common/config';
 
 export const useCustomizerStore = defineStore({
   id: 'customizer',
-  persist: {
-    enabled: true
-  },
+  persist: true,
   state: () => ({
     mini_sidebar: config.mini_sidebar,
     setHorizontalLayout: config.setHorizontalLayout,

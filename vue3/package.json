@@ -1,0 +1,62 @@
+{
+  "name": "vue3",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --port 3354",
+    "format": "prettier --write .",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint . --ext .ts,.vue --cache",
+    "lint:fix": "eslint . --ext .ts,.vue --fix --cache",
+    "dev:lint": "concurrently -k -n VITE,ESLINT -c auto \"vite\" \"chokidar 'src/**/*.{ts,vue}' -c 'eslint --cache {path}'\"",
+    "dev:ts": "CHECK_TS=true vite",
+    "dev:all": "CHECK_TS=true pnpm dev:lint",
+    "build": "vite build",
+    "build:typecheck": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "@mdi/font": "^7.4.47",
+    "ag-grid-community": "^34.1.1",
+    "ag-grid-vue3": "^34.1.1",
+    "axios": "^1.11.0",
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.5.0",
+    "vite-plugin-vuetify": "^2.1.2",
+    "vue": "^3.5.18",
+    "vue-i18n": "^9.14.5",
+    "vue-router": "^4.5.1",
+    "vue-tabler-icons": "^2.21.0",
+    "vue-toastification": "^2.0.0-rc.5",
+    "vue3-easy-data-table": "^1.5.47",
+    "vuetify": "^3.9.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/node": "^24.3.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.7.0",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-vue": "^9.33.0",
+    "globals": "^15.15.0",
+    "prettier": "^3.3.3",
+    "sass-embedded": "^1.90.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2",
+    "vite-plugin-checker": "^0.10.2",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^3.0.5"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not op_mini all"
+  ],
+  "packageManager": "pnpm@10.8.1+sha512.c50088ba998c67b8ca8c99df8a5e02fd2ae2e2b29aaf238feaa9e124248d3f48f9fb6db2424949ff901cffbb5e0f0cc1ad6aedb602cd29450751d11c35023677"
+}

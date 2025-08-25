@@ -1,0 +1,47 @@
+@use '../variables' as *;
+
+.customize-table {
+  border-radius: $border-radius-root;
+  .vue3-easy-data-table__main,
+  .vue3-easy-data-table__footer {
+    border-radius: $border-radius-root;
+  }
+  white-space: nowrap;
+  --easy-table-border: 1px solid rgb(var(--v-theme-inputBorder), 0.1);
+  --easy-table-row-border: 1px solid rgb(var(--v-theme-inputBorder), 0.1);
+
+  --easy-table-header-font-size: 14px;
+  --easy-table-header-height: 50px;
+  --easy-table-header-font-color: rgb(var(--v-theme-darkText));
+  --easy-table-header-background-color: rgb(var(--v-theme-surface));
+
+  --easy-table-header-item-padding: 10px 15px;
+
+  --easy-table-body-even-row-font-color: rgb(var(--v-theme-surface));
+  --easy-table-body-even-row-background-color: rgba(0, 0, 0, 0.02);
+
+  --easy-table-body-row-font-color: rgb(var(--v-theme-darkText));
+  --easy-table-body-row-background-color: rgb(var(--v-theme-surface));
+  --easy-table-body-row-height: 50px;
+  --easy-table-body-row-font-size: 14px;
+
+  --easy-table-body-row-hover-font-color: rgb(var(--v-theme-darkText));
+  --easy-table-body-row-hover-background-color: rgba(0, 0, 0, 0.02);
+
+  --easy-table-body-item-padding: 15px;
+
+  --easy-table-footer-background-color: rgb(var(--v-theme-surface));
+  --easy-table-footer-font-color: rgb(var(--v-theme-darkText));
+  --easy-table-footer-font-size: 14px;
+  --easy-table-footer-padding: 0px 10px;
+  --easy-table-footer-height: 50px;
+
+  --easy-table-rows-per-page-selector-width: 70px;
+  --easy-table-rows-per-page-selector-option-padding: 10px;
+}
+@media (max-width: 800px) {
+  .vue3-easy-data-table__footer {
+    overflow: auto;
+    justify-content: start !important;
+  }
+}

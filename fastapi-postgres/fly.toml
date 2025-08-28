@@ -3,7 +3,8 @@ primary_region = 'fra'
 
 
 [build]
-dockerfile = '../docker/DockerfileFastapi'
+  context = "."
+  dockerfile = "../docker/DockerfileFastapi"
 
 [deploy]
   release_command = "bash -lc 'set -euo pipefail; PYTHONUNBUFFERED=1 PIP_DISABLE_PIP_VERSION_CHECK=1 python -m pip install --no-cache-dir -r requirements-test.txt; pytest -q --maxfail=1 --disable-warnings --color=yes ${TEST_PATH:-tests}'"

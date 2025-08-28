@@ -1,9 +1,7 @@
 app = 'full-stack-api'
 primary_region = 'fra'
 
-[experimental]
-  cmd = ['bash', 'start_server.sh']
-  private_network = true
+
 [build]
 dockerfile = '../docker/DockerfileFastapi'
 
@@ -25,6 +23,7 @@ dockerfile = '../docker/DockerfileFastapi'
   auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
+  processes = ["app"]
 
 [[vm]]
 memory = '256mb'

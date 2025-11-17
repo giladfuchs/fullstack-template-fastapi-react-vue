@@ -1,0 +1,20 @@
+# Core
+fastapi==0.115.6
+sqlmodel==0.0.22
+sqlalchemy[asyncio]==2.0.40
+psycopg[binary,pool]==3.2.2
+
+# Pydantic
+pydantic==2.12.4
+pydantic-settings==2.12.0
+
+# Auth (JWT only)
+python-jose==3.4.0
+cryptography==44.0.1
+
+# Server
+uvicorn[standard]==0.30.1
+gunicorn==23.0.0
+
+# Dev/utility
+Faker==25.8.0

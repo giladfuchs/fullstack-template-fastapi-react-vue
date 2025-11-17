@@ -1,0 +1,25 @@
+@use '../variables' as *;
+
+.v-btn {
+  &.bg-lightprimary {
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: rgb(var(--v-theme-primary)) !important;
+      color: $white !important;
+    }
+  }
+  &.bg-lightsecondary {
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: rgb(var(--v-theme-secondary)) !important;
+      color: $white !important;
+    }
+  }
+}
+
+.v-btn {
+  text-transform: capitalize;
+  letter-spacing: $btn-letter-spacing;
+}

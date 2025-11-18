@@ -19,7 +19,6 @@ This is a full stack web application template built with:
 This project is a clean starting point for any full stack application.  
 It includes everything you need to get moving quickly, without extra setup:
 
-
 ### Frontend
 - Dynamic tables: two ready-made table components that automatically adapt to your models.  
 - Generic form system: add and edit any model through a single reusable form component.  
@@ -131,7 +130,7 @@ Make sure your `DATABASE_URL` is set correctly in `.env` (or simply use the Post
 An example `.env` file might look like this:
 
 ```bash
-DATABASE_URL=postgresql+asyncpg://user:password@localhost:5432/dbname
+DATABASE_URL=postgresql+psycopg://user:password@localhost:5432/dbname
 USER_LOCAL=your_computer_username   # e.g. value from os.getenv("USER")
 
 ```

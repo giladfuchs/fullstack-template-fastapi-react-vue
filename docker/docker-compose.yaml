@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:17
     container_name: postgresql1
     restart: always
     environment:
@@ -25,7 +25,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: "postgresql+asyncpg://admin:admin@db:5434/postgres"
+      DATABASE_URL: "postgresql+psycopg://admin:admin@db:5434/postgres"
     ports:
       - "5001:80"
   vue-frontend:

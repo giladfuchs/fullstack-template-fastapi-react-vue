@@ -10,18 +10,13 @@ from common.config import conf
 
 
 def create_app(docs=False) -> FastAPI:
-    app = (
-        FastAPI(title=conf.SERVER_NAME)
-        if docs
-        else FastAPI(title=conf.SERVER_NAME, docs_url=None, redoc_url=None)
+    app = FastAPI(
+        title=conf.SERVER_NAME,
+        docs_url="/" if docs else None,
+        redoc_url=None,
+        openapi_url="/openapi.json" if docs else None,
     )
-
     app.include_router(router)
-    if docs:
-
-        @app.get("/")
-        async def root():
-            return RedirectResponse(url="/docs")
 
     app.add_middleware(
         CORSMiddleware,

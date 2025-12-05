@@ -3,7 +3,7 @@ from typing import Any, Type
 from pydantic import BaseModel
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, sessionmaker
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -35,11 +35,24 @@ class DBModel(BaseUtils):
     engine = create_async_engine(
         conf.POSTGRES_DATABASE_URL,
         echo=False,
+        pool_size=5,
+        max_overflow=5,
+        pool_timeout=30,
+        pool_recycle=1800,
+        pool_pre_ping=True,
+        connect_args={
+            "prepare_threshold": None,
+            "connect_timeout": 5,
+        },
     )
-
+    async_session = sessionmaker(
+        bind=engine,
+        class_=AsyncSession,
+        expire_on_commit=False,
+    )
     @classmethod
     async def add_update(cls, row: BaseTable | list[BaseTable]):
-        async with AsyncSession(cls.engine) as session:
+        async with cls.async_session() as session:
             try:
                 if isinstance(row, list):
                     merged_rows = []
@@ -156,7 +169,7 @@ class DBModel(BaseUtils):
         statement = cls.build_query(filter_query, offset, limit)
 
         try:
-            async with AsyncSession(cls.engine) as session:
+            async with cls.async_session() as session:
                 results = await session.exec(statement)
                 res = (
                     [
@@ -180,7 +193,7 @@ class DBModel(BaseUtils):
         cls, filter_query: FilterQuery = FilterQuery(), offset: int = 0
     ):
         try:
-            async with AsyncSession(cls.engine) as session:
+            async with cls.async_session() as session:
                 select_stmt = cls.build_query(filter_query, offset, limit=0)
                 results = (await session.exec(select_stmt)).all()
                 if not results:

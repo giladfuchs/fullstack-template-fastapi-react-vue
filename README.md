@@ -12,7 +12,7 @@ This is a full stack web application template built with:
 
 - [React Frontend ](https://fullstack-template-react.vercel.app/)
 - [Vue Frontend ](https://fullstack-template-vue.vercel.app/)
-- [FastAPI Backend Docs  ](https://full-stack-api.fly.dev/docs)
+- [FastAPI Backend Docs  ](https://full-stack-api.fly.dev)
 ---
 ## Why use this template?
 

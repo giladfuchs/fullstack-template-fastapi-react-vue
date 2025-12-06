@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, UTC
+from datetime import UTC, datetime, timedelta
 
 from fastapi import Body, Depends
 from fastapi.security import OAuth2PasswordBearer
@@ -21,8 +21,8 @@ class Auth(BaseUtils):
     @staticmethod
     def user_filtered_query(field_name: str = conf.AUTH_PARENT_FIELD):
         def _inject_user_filter(
-                filter_query: FilterQuery = Body(default=FilterQuery()),
-                user_auth: TeacherModel.table = Depends(Auth.jwt_required),
+            filter_query: FilterQuery = Body(default=FilterQuery()),
+            user_auth: TeacherModel.table = Depends(Auth.jwt_required),
         ) -> FilterQuery:
             filter_query.query.append(
                 DBQuery(key=field_name, opt=DBOperator.eq, value=int(user_auth.id))

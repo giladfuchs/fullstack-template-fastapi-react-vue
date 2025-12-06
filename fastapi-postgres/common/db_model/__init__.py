@@ -2,8 +2,8 @@ from typing import Any, Type
 
 from pydantic import BaseModel
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import selectinload, sessionmaker
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.orm import selectinload
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -35,21 +35,20 @@ class DBModel(BaseUtils):
     engine = create_async_engine(
         conf.POSTGRES_DATABASE_URL,
         echo=False,
-        pool_size=5,
-        max_overflow=5,
-        pool_timeout=30,
+        pool_size=3,
+        max_overflow=2,
+        pool_timeout=15,
         pool_recycle=1800,
         pool_pre_ping=True,
-        connect_args={
-            "prepare_threshold": None,
-            "connect_timeout": 5,
-        },
+        connect_args={"prepare_threshold": None, "connect_timeout": 5},
     )
-    async_session = sessionmaker(
+
+    async_session = async_sessionmaker(
         bind=engine,
-        class_=AsyncSession,
         expire_on_commit=False,
+        class_=AsyncSession,
     )
+
     @classmethod
     async def add_update(cls, row: BaseTable | list[BaseTable]):
         async with cls.async_session() as session:

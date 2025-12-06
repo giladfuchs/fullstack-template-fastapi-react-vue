@@ -9,10 +9,10 @@ from common.serializers import BaseTable
 class ParseObj:
     @classmethod
     def set_elements_by_dict(
-            cls,
-            db_obj: BaseTable,
-            new_obj: Union[BaseModel, BaseTable, Dict],
-            exclude_items: List[str] = [],
+        cls,
+        db_obj: BaseTable,
+        new_obj: Union[BaseModel, BaseTable, Dict],
+        exclude_items: List[str] = [],
     ):
         def extract_items(obj):
             if hasattr(obj, "model_dump"):
@@ -22,7 +22,9 @@ class ParseObj:
 
         def update_nested(target, updates):
             if isinstance(target, dict):
-                target.update({k: v for k, v in updates.items() if k not in exclude_items})
+                target.update(
+                    {k: v for k, v in updates.items() if k not in exclude_items}
+                )
             else:
                 for k, v in updates.items():
                     if k not in exclude_items:
@@ -60,7 +62,9 @@ class ParseObj:
 
             elif isinstance(value, list) and value and isinstance(value[0], dict):
                 try:
-                    related_class = getattr(db_obj.__class__, key).property.mapper.class_
+                    related_class = getattr(
+                        db_obj.__class__, key
+                    ).property.mapper.class_
                     setattr(db_obj, key, [related_class(**v) for v in value])
                 except Exception:
                     setattr(db_obj, key, value)  # fallback to raw list if no mapper

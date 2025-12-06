@@ -13,7 +13,6 @@ declare module '@mui/material/styles' {
         900: string;
     }
 
-
     interface IconPaletteColor {
         main: string;
     }

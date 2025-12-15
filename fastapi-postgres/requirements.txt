@@ -1,7 +1,7 @@
 # Core
 fastapi==0.122.0
-sqlalchemy[asyncio]==2.0.41
 sqlmodel==0.0.22
+sqlalchemy[asyncio]==2.0.41
 psycopg[binary,pool]==3.2.3
 
 # Pydantic

@@ -1,7 +1,9 @@
+import asyncio
+from contextlib import asynccontextmanager
 from typing import Any, Type
 
 from pydantic import BaseModel
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, OperationalError
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import selectinload
 from sqlmodel import select
@@ -31,27 +33,55 @@ class DBModel(BaseUtils):
     table: Type[BaseTable] | None = None
     payload: Type[BaseModel] | None = None
     model_type: ModelType | None = None
+    SESSION_MAX_RETRIES = 2
+    SESSION_RETRY_DELAY = 0.5
 
     engine = create_async_engine(
         conf.POSTGRES_DATABASE_URL,
         echo=False,
-        pool_size=3,
-        max_overflow=2,
-        pool_timeout=15,
-        pool_recycle=1800,
         pool_pre_ping=True,
-        connect_args={"prepare_threshold": None, "connect_timeout": 5},
+        connect_args={
+            "prepare_threshold": None,
+            "connect_timeout": 10,
+        },
     )
 
     async_session = async_sessionmaker(
         bind=engine,
-        expire_on_commit=False,
         class_=AsyncSession,
+        expire_on_commit=False,
+        autoflush=False,
     )
 
     @classmethod
+    @asynccontextmanager
+    async def get_session(cls):
+        for attempt in range(cls.SESSION_MAX_RETRIES):
+            session = cls.async_session()
+            try:
+                yield session
+                await session.commit()
+                return
+            except OperationalError as exc:
+                await session.rollback()
+                if attempt < cls.SESSION_MAX_RETRIES - 1:
+                    cls.logger.warning(
+                        f"Session OperationalError, retrying "
+                        f"({attempt + 1}/{cls.SESSION_MAX_RETRIES}). Error: {exc}"
+                    )
+                    await asyncio.sleep(cls.SESSION_RETRY_DELAY * (attempt + 1))
+                else:
+                    cls.logger.error("Session failed after retries")
+                    raise
+            except Exception:
+                await session.rollback()
+                raise
+            finally:
+                await session.close()
+
+    @classmethod
     async def add_update(cls, row: BaseTable | list[BaseTable]):
-        async with cls.async_session() as session:
+        async with cls.get_session() as session:
             try:
                 if isinstance(row, list):
                     merged_rows = []
@@ -68,7 +98,6 @@ class DBModel(BaseUtils):
                     await session.refresh(row)
                     return row
             except Exception as ex:
-                await session.rollback()
                 dump = "" if isinstance(row, list) else row.model_dump()
                 cls.logger.error(f"{dump}: {ex}")
                 if isinstance(ex, IntegrityError):
@@ -81,8 +110,7 @@ class DBModel(BaseUtils):
                             except Exception:
                                 pass
                         cls.error_400(details=f"unique:{field}")
-                else:
-                    cls.error_400(details=ex)
+                cls.error_400(details=ex)
 
     @classmethod
     async def add_or_find_update_single(
@@ -168,7 +196,7 @@ class DBModel(BaseUtils):
         statement = cls.build_query(filter_query, offset, limit)
 
         try:
-            async with cls.async_session() as session:
+            async with cls.get_session() as session:
                 results = await session.exec(statement)
                 res = (
                     [
@@ -192,7 +220,7 @@ class DBModel(BaseUtils):
         cls, filter_query: FilterQuery = FilterQuery(), offset: int = 0
     ):
         try:
-            async with cls.async_session() as session:
+            async with cls.get_session() as session:
                 select_stmt = cls.build_query(filter_query, offset, limit=0)
                 results = (await session.exec(select_stmt)).all()
                 if not results:

@@ -8,6 +8,8 @@ from common.enums import DBOperator, ModelType
 
 
 class TestApi:
+    __test__ = False
+
     def __init__(self, client: AsyncClient, headers: dict | None = None):
         self.client: AsyncClient = client
         self.headers: dict = headers or {}

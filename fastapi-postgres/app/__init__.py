@@ -2,8 +2,7 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic.error_wrappers import ValidationError
-from starlette.responses import RedirectResponse
+from pydantic import ValidationError
 
 from app.routers import router
 from common.config import conf

@@ -227,7 +227,7 @@ class DBModel(BaseUtils):
                     cls.error_400(details="not delete nothing")
                 for obj in results:
                     await session.delete(obj)
-                await session.commit()
+
         except Exception as ex:
             cls.error_400(details=ex)
 

@@ -118,7 +118,7 @@ class DBModel(BaseUtils):
         add_or_id: str | int,
         body: BaseModel | dict[str, Any],
         **kwargs: Any,
-    ) -> "cls.table":
+    ) -> BaseTable:
         user_auth = kwargs.get("user_auth")
 
         if add_or_id != "add":
@@ -203,7 +203,7 @@ class DBModel(BaseUtils):
                         _.model_dump(include_relations=filter_query.relation_model)
                         for _ in results
                     ]
-                    if as_dict or filter_query.relation_model
+                    if as_dict
                     else list(results)
                 )
         except Exception as ex:

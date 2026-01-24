@@ -40,7 +40,7 @@ class Grade(EnumBase):
     F = "F"
     G = "G"
     H = "H"
-    I = "I"
+    I_ = "I"
     J = "J"
     K = "K"
     L = "L"

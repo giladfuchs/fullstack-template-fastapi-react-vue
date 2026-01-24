@@ -1,4 +1,4 @@
-from typing import List, Type
+from typing import Type
 
 from fastapi import APIRouter, Body, Depends, HTTPException
 
@@ -11,7 +11,7 @@ def generate_crud_routes(
     model: Type[DBModel],
     prefix: str,
     require_token: bool = True,
-    allowed_methods: List[str] = ["read", "add", "edit", "delete"],
+    allowed_methods: list[str] = ["read", "add", "edit", "delete"],
 ):
     router = APIRouter(prefix=f"/{prefix}", tags=[prefix])
 
@@ -31,7 +31,7 @@ def generate_crud_routes(
 
     if "read" in allowed_methods:
 
-        @router.post("", response_model=List[response_payload] | response_payload)
+        @router.post("", response_model=list[response_payload] | response_payload)
         async def fetch_rows(
             pagination: Pagination = Depends(),
             filter_query: FilterQuery = filter_dep,
@@ -54,7 +54,7 @@ def generate_crud_routes(
 
     if "add" in allowed_methods or "edit" in allowed_methods:
 
-        @router.post("/{add_or_id}", response_model=model.table)
+        @router.post("/{add_or_id}", response_model=model.payload)
         async def add_or_update(
             add_or_id: str,
             body: model.payload,

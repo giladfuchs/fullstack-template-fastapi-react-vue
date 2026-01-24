@@ -1,5 +1,3 @@
-from typing import List
-
 from pydantic import BaseModel, Field
 
 from common.enums import Grade
@@ -19,7 +17,7 @@ class StudentPayload(BaseModel):
 
 
 class FullStudentPayload(StudentPayload):
-    assignments: List[AssignmentPayload] = []
+    assignments: list[AssignmentPayload] = []
     id: int
 
 

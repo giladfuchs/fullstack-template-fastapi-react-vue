@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, List, Union, get_type_hints
+from typing import Union, get_type_hints
 
 from pydantic import BaseModel
 
@@ -11,8 +11,8 @@ class ParseObj:
     def set_elements_by_dict(
         cls,
         db_obj: BaseTable,
-        new_obj: Union[BaseModel, BaseTable, Dict],
-        exclude_items: List[str] = [],
+        new_obj: Union[BaseModel, BaseTable, dict],
+        exclude_items: list[str] = [],
     ):
         def extract_items(obj):
             if hasattr(obj, "model_dump"):
@@ -30,15 +30,15 @@ class ParseObj:
                     if k not in exclude_items:
                         setattr(target, k, v)
 
-        def coerce_datetime_if_needed(field_name, value):
+        def coerce_datetime_if_needed(field_name, _value):
             expected_types = get_type_hints(db_obj.__class__)
             if field_name in expected_types and expected_types[field_name] == datetime:
-                if isinstance(value, str):
+                if isinstance(_value, str):
                     try:
-                        return datetime.fromisoformat(value)
+                        return datetime.fromisoformat(_value)
                     except Exception:
-                        return value
-            return value
+                        return _value
+            return _value
 
         items = extract_items(new_obj)
 

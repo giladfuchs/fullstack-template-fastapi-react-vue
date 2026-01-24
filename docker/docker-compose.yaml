@@ -1,10 +1,10 @@
 version: "3.7"
+name: fullstack-template
 
 services:
   db:
     image: postgres:17
-    container_name: postgresql1
-    restart: always
+    container_name: fullstack-template-db
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
@@ -14,14 +14,13 @@ services:
     ports:
       - "5434:5434"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_fullstack_template:/var/lib/postgresql/data
 
   backend:
     container_name: fastapi-backend
     build:
       context: ../fastapi-postgres
       dockerfile: ../docker/DockerfileFastapi
-    restart: always
     depends_on:
       - db
     environment:
@@ -36,7 +35,6 @@ services:
       args:
         APP_DIR: "vue3"
         VITE_API_URL: "http://localhost:5001"
-    restart: always
     ports:
       - "3355:80"
 
@@ -48,11 +46,10 @@ services:
       args:
         APP_DIR: "react"
         VITE_API_URL: "http://localhost:5001"
-    restart: always
     ports:
       - "3366:80"
 
 
 
 volumes:
-  postgres_data:
+  postgres_data_fullstack_template:

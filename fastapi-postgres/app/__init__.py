@@ -26,21 +26,23 @@ def create_app(docs=False) -> FastAPI:
     )
 
     @app.exception_handler(HTTPException)
-    async def validation_exception_handler(request, exc: HTTPException):
+    async def http_exception_handler(request, exc: HTTPException):
         return JSONResponse(
-            content=dict(message=f"error in response value {exc.detail}"),
+            content={"message": f"error in response value {exc.detail}"},
             status_code=exc.status_code,
         )
 
     @app.exception_handler(ValidationError)
-    async def validation_exception_handler(request, exc: ValidationError):
+    async def pydantic_validation_exception_handler(request, exc: ValidationError):
         return JSONResponse(
-            content=dict(message=f"error in response value {exc}"),
+            content={"message": f"error in response value {exc}"},
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
     @app.exception_handler(RequestValidationError)
-    async def validation_exception_handler(request, exc: RequestValidationError):
+    async def request_validation_exception_handler(
+        request, exc: RequestValidationError
+    ):
         errors = []
         for err in exc.errors():
             loc = err["loc"]

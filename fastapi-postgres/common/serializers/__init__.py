@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Set, TypeAlias
+from typing import Any, TypeAlias
 
 from pydantic import BaseModel
 from pydantic import Field as PydanticField
@@ -15,7 +15,7 @@ class BaseTable(SQLModel):
         *,
         include_relations: bool = False,
         max_depth: int = 1,
-        _visited: Set[int] | None = None,
+        _visited: set[int] | None = None,
         **kwargs: Any,
     ) -> dict[str, Any]:
         base = super().model_dump(**kwargs)
@@ -72,7 +72,7 @@ RowLike: TypeAlias = BaseTable | BaseModel | dict[str, Any]
 
 
 class IdBaseTable(BaseTable):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
 
     def __hash__(self):
         return hash(self.id)
@@ -93,9 +93,9 @@ class DBQuery(BaseModel):
 
 
 class FilterQuery(BaseModel):
-    query: List[DBQuery] = []
+    query: list[DBQuery] = Field(default_factory=list)
     relation_model: bool = False
-    sort: Optional[str] = None
+    sort: str | None = None
 
 
 class Pagination(BaseModel):

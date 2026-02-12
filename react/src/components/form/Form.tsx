@@ -13,45 +13,50 @@ import { useAppSelector } from '@/lib/store';
 export default function Form() {
     const intl = useIntl();
     const navigate = useNavigate();
-    const { id, model } = useParams() as { id: string; model: ModelType };
-    const errorRedirect = <Navigate to="/error" replace />;
-    if (!Object.values(ModelType).includes(model as ModelType)) return errorRedirect;
-    const { student_id, user_id } = useAppSelector((state) => state.general);
+    const params = useParams() as { id?: string; model?: string };
+    const model = params.model as ModelType | undefined;
+    const id = params.id ?? 'add';
 
-    const is_add = id === 'add';
+    const { student_id, user_id } = useAppSelector((state) => state.general);
 
     const [fieldError, setFieldError] = useState<string | null>(null);
     const [fields, setFields] = useState<FormField[]>([]);
     const [shouldRedirect, setShouldRedirect] = useState(false);
 
+    const modelIsValid = model != null && Object.values(ModelType).includes(model);
+
+    const is_add = id === 'add';
+
     const setFormFields = useCallback(
         (data: FormModelType | Record<string, FieldValue>) => {
+            if (!modelIsValid || model == null) return;
             setFields(create_form_fields(get_form_by_model(model), data as Record<string, FieldValue>));
         },
-        [model]
+        [model, modelIsValid]
     );
 
     const loadData = useCallback(async () => {
+        if (!modelIsValid || model == null) return;
+
         if (is_add) {
             setFormFields({});
             return;
         }
+
         try {
-            const data: FormModelType = await fetchRowById({
-                model,
-                id
-            });
+            const data: FormModelType = await fetchRowById({ model, id });
             setFormFields(data);
         } catch {
             setShouldRedirect(true);
         }
-    }, [id, model, is_add, setFormFields]);
+    }, [id, model, is_add, modelIsValid, setFormFields]);
 
     useEffect(() => {
         void loadData();
     }, [loadData]);
 
-    if (shouldRedirect) return errorRedirect;
+    if (!modelIsValid || model == null) return <Navigate to="/error" replace />;
+    if (shouldRedirect) return <Navigate to="/error" replace />;
 
     const title = intl.formatMessage({ id: `${is_add ? 'form_header_add' : 'form_header_edit'}_${model}` });
 
@@ -63,12 +68,14 @@ export default function Form() {
                     [string, FieldValue]
                 >((f) => (typeof f.value === 'string' ? [String(f.key), f.value.trim() === '' ? null : f.value.trim()] : [String(f.key), f.value ?? null]))
         );
+
         if ([ModelType.student, ModelType.assignment].includes(model)) data.teacher_id = user_id;
         if (model === ModelType.assignment) data.student_id = student_id;
 
         try {
             const message = intl.formatMessage({ id: is_add ? 'toast.create_success' : 'toast.edit_success' }, { model });
             await createOrUpdateRow({ model, data, id, message });
+
             if (model === ModelType.teacher) navigate(`/login`);
             else if (model === ModelType.student && is_add) navigate(`/${ModelType.student}`);
             else navigate(`/view/${student_id}`);

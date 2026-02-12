@@ -24,6 +24,9 @@ export default [
   },
   {
     files: ['**/*.vue'],
+    rules: {
+      'no-useless-assignment': 'off'
+    },
     languageOptions: {
       parser: vueParser,
       parserOptions: {

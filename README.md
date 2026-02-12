@@ -111,7 +111,7 @@ pnpm start
 ### Run Python backend locally
 
 ```bash
-docker run --name url-link-pg -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=url_link -p 5437:5432 -v postgres_data_url:/var/lib/postgresql/data -d postgres:17
+docker run --name fullstack-template-db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=postgres -e POSTGRES_INITDB_ARGS="--auth=md5" -p 5434:5434 -v postgres_data_fullstack_template:/var/lib/postgresql/data -d postgres:17 postgres -p 5434
 ```
 
 ```bash
@@ -130,7 +130,7 @@ Make sure your `DATABASE_URL` is set correctly in `.env` (or simply use the Post
 An example `.env` file might look like this:
 
 ```bash
-DATABASE_URL=postgresql+psycopg://user:password@localhost:5432/dbname
+DATABASE_URL=postgresql+psycopg://user:password@localhost:5434/postgres
 USER_LOCAL=your_computer_username   # e.g. value from os.getenv("USER")
 
 ```

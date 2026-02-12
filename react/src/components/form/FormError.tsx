@@ -7,7 +7,7 @@ export default function FormError({ fieldError }: { fieldError: string }) {
     const isFieldSpecific = fieldError.startsWith('form.label.');
     const isUnique = fieldError.includes('unique:');
 
-    let baseFieldId = isUnique
+    const baseFieldId = isUnique
         ? fieldError.slice(fieldError.indexOf('unique:') + 'unique:'.length)
         : fieldError.slice('form.label.'.length);
     toast.error(intl.formatMessage({ id: 'form.error' }), {

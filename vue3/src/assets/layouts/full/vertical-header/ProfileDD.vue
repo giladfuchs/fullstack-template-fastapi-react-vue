@@ -5,7 +5,6 @@ import { SettingsIcon, LogoutIcon, ChevronDownIcon } from 'vue-tabler-icons';
 import { useAuthStore } from '@/common/stores/auth';
 import Customizer from '@/assets/layouts/full/customizer/Customizer.vue';
 
-
 const authStore = useAuthStore();
 
 const { locale } = useI18n();

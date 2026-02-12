@@ -9,15 +9,22 @@ export default tseslint.config([
     globalIgnores(['dist']),
     {
         files: ['**/*.{ts,tsx}'],
-        extends: [
-            js.configs.recommended,
-            tseslint.configs.recommended,
-            reactHooks.configs['recommended-latest'],
-            reactRefresh.configs.vite
-        ],
+        extends: [js.configs.recommended, ...tseslint.configs.recommended],
+        plugins: {
+            'react-hooks': reactHooks,
+            'react-refresh': reactRefresh
+        },
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser
+        },
+        rules: {
+            ...(reactHooks.configs.recommended.rules ?? {}),
+
+            'react-refresh/only-export-components': 'off',
+
+            'react-hooks/refs': 'off',
+            'react-hooks/set-state-in-effect': 'off'
         }
     }
 ]);

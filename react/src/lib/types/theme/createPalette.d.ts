@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { PaletteColor } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {

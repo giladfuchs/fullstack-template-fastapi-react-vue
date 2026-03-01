@@ -4,14 +4,6 @@ import sys
 
 from common.config import IS_LOCAL
 
-# from datetime import datetime, timedelta, timezone
-
-
-# class IsraelFormatter(logging.Formatter):
-#     def formatTime(self, record, dateformat=None):
-#         dt = datetime.fromtimestamp(record.created, tz=timezone(timedelta(hours=3)))
-#         return dt.strftime(dateformat or "%Y-%m-%d %H:%M:%S")
-
 
 class Log:
     ICONS = {
@@ -23,21 +15,18 @@ class Log:
         "exception": "🧨",
     }
 
-    def __init__(self, use_icons=True):
+    def __init__(self, use_icons: bool = True):
         self.use_icons = use_icons
         self.logger = logging.getLogger("live-logger")
         self.logger.setLevel(logging.DEBUG)
 
         if not self.logger.handlers:
-            # formatter = IsraelFormatter("%(asctime)s - %(levelname)s - %(message)s")
             formatter = logging.Formatter("%(levelname)s - %(message)s")
 
             if IS_LOCAL:
                 stdout_handler = logging.StreamHandler(sys.stdout)
                 stdout_handler.setLevel(logging.DEBUG)
-                stdout_handler.addFilter(
-                    lambda record: record.levelno < logging.WARNING
-                )
+                stdout_handler.addFilter(lambda record: record.levelno < logging.WARNING)
                 stdout_handler.setFormatter(formatter)
 
                 stderr_handler = logging.StreamHandler(sys.stderr)
@@ -48,7 +37,7 @@ class Log:
                 self.logger.addHandler(stderr_handler)
             else:
                 unified_handler = logging.StreamHandler(sys.stdout)
-                unified_handler.setLevel(logging.DEBUG)
+                unified_handler.setLevel(logging.INFO)
                 unified_handler.setFormatter(formatter)
                 self.logger.addHandler(unified_handler)
 

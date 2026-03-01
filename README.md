@@ -2,7 +2,7 @@
 
 This is a full stack web application template built with:
 
-- **FastAPI** (Python 3.13) backend  
+- **FastAPI** (Python 3.14) backend  
 - **Vue 3.5** and **React 19** frontends — both written in **TypeScript**, with similar structure and design but implemented as standalone apps  
 - **PostgreSQL** database  
 
@@ -118,6 +118,7 @@ docker run --name fullstack-template-db -e POSTGRES_USER=admin -e POSTGRES_PASSW
 #install
 python -m venv venv
 source venv/bin/activate   # On Windows use: venv\Scripts\activate
+python -m pip install -U pip setuptools wheel
 pip install -r requirements.txt
 #run
 python debug.py   # or: uvicorn main:app --reload

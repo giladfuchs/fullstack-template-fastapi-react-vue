@@ -51,7 +51,7 @@ class TestApi:
     async def delete_row(self, *, model: ModelType, _id: int | str) -> None:
         body = {"query": [{"key": "id", "value": _id, "opt": DBOperator.eq}]}
         r = await self.client.request(
-            "DELETE", f"/{model}", content=json.dumps(body), headers=self.headers
+            "DELETE", f"/{model}", json=body, headers=self.headers
         )
         assert r.status_code == 200, f"{model} failed: {r.status_code} {r.text}"
 

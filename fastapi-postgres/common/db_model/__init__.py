@@ -33,19 +33,19 @@ class DBModel(BaseUtils):
     table: Type[BaseTable] | None = None
     payload: Type[BaseModel] | None = None
     model_type: ModelType | None = None
-    SESSION_MAX_RETRIES = 2
-    SESSION_RETRY_DELAY = 0.5
 
     engine = create_async_engine(
         conf.POSTGRES_DATABASE_URL,
         echo=False,
         pool_pre_ping=True,
+        pool_recycle=1800,
+        pool_size=20,
+        max_overflow=5,
         connect_args={
             "prepare_threshold": None,
             "connect_timeout": 10,
         },
     )
-
     async_session = async_sessionmaker(
         bind=engine,
         class_=AsyncSession,
@@ -56,28 +56,15 @@ class DBModel(BaseUtils):
     @classmethod
     @asynccontextmanager
     async def get_session(cls):
-        for attempt in range(cls.SESSION_MAX_RETRIES):
-            session = cls.async_session()
-            try:
-                yield session
-                await session.commit()
-                return
-            except OperationalError as exc:
-                await session.rollback()
-                if attempt < cls.SESSION_MAX_RETRIES - 1:
-                    cls.logger.warning(
-                        f"Session OperationalError, retrying "
-                        f"({attempt + 1}/{cls.SESSION_MAX_RETRIES}). Error: {exc}"
-                    )
-                    await asyncio.sleep(cls.SESSION_RETRY_DELAY * (attempt + 1))
-                else:
-                    cls.logger.error("Session failed after retries")
-                    raise
-            except Exception:
-                await session.rollback()
-                raise
-            finally:
-                await session.close()
+        session = cls.async_session()
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+        finally:
+            await session.close()
 
     @classmethod
     async def add_update(cls, row: BaseTable | list[BaseTable]):
@@ -114,10 +101,10 @@ class DBModel(BaseUtils):
 
     @classmethod
     async def add_or_find_update_single(
-        cls,
-        add_or_id: str | int,
-        body: BaseModel | dict[str, Any],
-        **kwargs: Any,
+            cls,
+            add_or_id: str | int,
+            body: BaseModel | dict[str, Any],
+            **kwargs: Any,
     ) -> BaseTable:
         user_auth = kwargs.get("user_auth")
 
@@ -125,7 +112,7 @@ class DBModel(BaseUtils):
             db_obj = await cls.get_by_id(_id=add_or_id, **kwargs)
 
             if db_obj and (
-                not user_auth or user_auth.id == getattr(db_obj, conf.AUTH_PARENT_FIELD)
+                    not user_auth or user_auth.id == getattr(db_obj, conf.AUTH_PARENT_FIELD)
             ):
                 cls.set_elements_by_dict(db_obj, body, exclude_items=["id"])
             else:
@@ -187,11 +174,11 @@ class DBModel(BaseUtils):
 
     @classmethod
     async def fetch_rows(
-        cls,
-        filter_query: FilterQuery = FilterQuery(),
-        offset: int = 0,
-        limit: int = 1000,
-        as_dict: bool = False,
+            cls,
+            filter_query: FilterQuery = FilterQuery(),
+            offset: int = 0,
+            limit: int = 1000,
+            as_dict: bool = False,
     ) -> RowLike | list[RowLike]:
         statement = cls.build_query(filter_query, offset, limit)
 
@@ -217,7 +204,7 @@ class DBModel(BaseUtils):
 
     @classmethod
     async def delete_rows(
-        cls, filter_query: FilterQuery = FilterQuery(), offset: int = 0
+            cls, filter_query: FilterQuery = FilterQuery(), offset: int = 0
     ):
         try:
             async with cls.get_session() as session:

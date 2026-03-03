@@ -1,0 +1,30 @@
+.profileBtn {
+  height: 50px !important;
+  margin: 0 20px 0 10px !important;
+}
+
+.scroll-area {
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--v-theme-primary)) rgb(var(--v-theme-surface));
+}
+
+.scroll-area::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.scroll-area::-webkit-scrollbar-track {
+  background: rgb(var(--v-theme-surface));
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--v-theme-primary));
+  border-radius: 0.5rem;
+}
+
+.scroll-area::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--v-theme-darkprimary));
+}

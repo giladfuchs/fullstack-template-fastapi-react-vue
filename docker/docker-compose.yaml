@@ -1,0 +1,55 @@
+version: "3.7"
+name: fullstack-template
+
+services:
+  db:
+    image: postgres:17
+    container_name: fullstack-template-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "--auth=md5"
+    command: postgres -p 5434
+    ports:
+      - "5434:5434"
+    volumes:
+      - postgres_data_fullstack_template:/var/lib/postgresql/data
+
+  backend:
+    container_name: fastapi-backend
+    build:
+      context: ../fastapi-postgres
+      dockerfile: ../docker/DockerfileFastapi
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql+psycopg://admin:admin@db:5434/postgres"
+    ports:
+      - "5001:80"
+  vue-frontend:
+    container_name: vue3-frontend
+    build:
+      context: ..
+      dockerfile: docker/DockerfileFront
+      args:
+        APP_DIR: "vue3"
+        VITE_API_URL: "http://localhost:5001"
+    ports:
+      - "3355:80"
+
+  react-frontend:
+    container_name: react-frontend
+    build:
+      context: ..
+      dockerfile: docker/DockerfileFront
+      args:
+        APP_DIR: "react"
+        VITE_API_URL: "http://localhost:5001"
+    ports:
+      - "3366:80"
+
+
+
+volumes:
+  postgres_data_fullstack_template:

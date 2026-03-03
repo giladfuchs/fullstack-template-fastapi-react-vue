@@ -1,0 +1,6 @@
+-r requirements.txt
+
+pytest==9.0.2
+httpx==0.28.1
+anyio==4.12.1
+asgi-lifespan==2.1.0

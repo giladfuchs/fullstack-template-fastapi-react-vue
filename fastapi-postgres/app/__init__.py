@@ -1,0 +1,65 @@
+from fastapi import FastAPI, HTTPException, status
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from pydantic import ValidationError
+
+from app.routers import router
+from common.config import conf
+
+
+def create_app(docs=False) -> FastAPI:
+    app = FastAPI(
+        title=conf.SERVER_NAME,
+        docs_url="/" if docs else None,
+        redoc_url=None,
+        openapi_url="/openapi.json" if docs else None,
+    )
+    app.include_router(router)
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    @app.exception_handler(HTTPException)
+    async def http_exception_handler(request, exc: HTTPException):
+        return JSONResponse(
+            content={"message": f"error in response value {exc.detail}"},
+            status_code=exc.status_code,
+        )
+
+    @app.exception_handler(ValidationError)
+    async def pydantic_validation_exception_handler(request, exc: ValidationError):
+        return JSONResponse(
+            content={"message": f"error in response value {exc}"},
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    @app.exception_handler(RequestValidationError)
+    async def request_validation_exception_handler(
+        request, exc: RequestValidationError
+    ):
+        errors = []
+        for err in exc.errors():
+            loc = err["loc"]
+            field = ".".join(
+                str(x) for x in (loc[1:] if loc and loc[0] == "body" else loc)
+            )
+            short_type = err["type"].split(".")[-1]
+            errors.append(
+                {
+                    "field": field,
+                    "error": short_type,
+                }
+            )
+
+        return JSONResponse(
+            content={"errors": errors},
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    return app

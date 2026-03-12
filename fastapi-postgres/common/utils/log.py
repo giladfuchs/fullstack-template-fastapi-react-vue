@@ -24,22 +24,26 @@ class Log:
             formatter = logging.Formatter("%(levelname)s - %(message)s")
 
             if IS_LOCAL:
-                stdout_handler = logging.StreamHandler(sys.stdout)
-                stdout_handler.setLevel(logging.DEBUG)
-                stdout_handler.addFilter(lambda record: record.levelno < logging.WARNING)
-                stdout_handler.setFormatter(formatter)
-
-                stderr_handler = logging.StreamHandler(sys.stderr)
-                stderr_handler.setLevel(logging.WARNING)
-                stderr_handler.setFormatter(formatter)
-
-                self.logger.addHandler(stdout_handler)
-                self.logger.addHandler(stderr_handler)
+                stdout_level = logging.DEBUG
+                stderr_level = logging.WARNING
             else:
-                unified_handler = logging.StreamHandler(sys.stdout)
-                unified_handler.setLevel(logging.INFO)
-                unified_handler.setFormatter(formatter)
-                self.logger.addHandler(unified_handler)
+                stdout_level = logging.INFO
+                stderr_level = logging.ERROR
+
+            def stdout_filter(record):
+                return record.levelno < stderr_level
+
+            stdout_handler = logging.StreamHandler(sys.stdout)
+            stdout_handler.setLevel(stdout_level)
+            stdout_handler.addFilter(stdout_filter)
+            stdout_handler.setFormatter(formatter)
+
+            stderr_handler = logging.StreamHandler(sys.stderr)
+            stderr_handler.setLevel(stderr_level)
+            stderr_handler.setFormatter(formatter)
+
+            self.logger.addHandler(stdout_handler)
+            self.logger.addHandler(stderr_handler)
 
     def _log(self, level: str, message: str, exc_info=False):
         icon = self.ICONS.get(level, "") if self.use_icons else ""

@@ -180,7 +180,8 @@ const StudentView = () => {
             const student: Student = (await fetchRowById({
                 model: ModelType.student,
                 id,
-                relation: true
+                relation: true,
+                relations: ['assignments']
             })) as Student;
 
             setStudent(student);

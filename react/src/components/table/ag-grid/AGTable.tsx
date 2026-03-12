@@ -25,7 +25,7 @@ export default function AGTable() {
 
     useEffect(() => {
         if (!modelIsValid || model == null) return;
-        dispatch(fetchRowsByModel({ model, data: { relation_model: true } }));
+        dispatch(fetchRowsByModel({ model, data: { relation_model: true, relations: ['assignments'] } }));
     }, [dispatch, model, modelIsValid]);
 
     if (!modelIsValid || model == null) {

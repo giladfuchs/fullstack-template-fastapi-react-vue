@@ -25,10 +25,12 @@ class DBOperator(EnumBase):
     gt = "gt"
     ge = "ge"
     like = "like"
-    ilike = "ilike"  # PostgreSQL only
+    ilike = "ilike"
     in_ = "in_"
     not_in = "not_in"
-    is_null = "is_null"
+    contains = "contains"
+    is_ = "is_"
+    is_not = "is_not"
 
 
 class Grade(EnumBase):

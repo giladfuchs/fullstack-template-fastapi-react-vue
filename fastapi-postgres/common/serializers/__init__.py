@@ -1,10 +1,10 @@
 from typing import Any, TypeAlias
 
-from pydantic import BaseModel
-from pydantic import Field as PydanticField
+from pydantic import BaseModel, Field
 from sqlalchemy.inspection import inspect as sa_inspect
 from sqlalchemy.orm.attributes import NO_VALUE
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field as SQLModelField
+from sqlmodel import SQLModel
 
 from common.enums import DBOperator
 
@@ -72,7 +72,7 @@ RowLike: TypeAlias = BaseTable | BaseModel | dict[str, Any]
 
 
 class IdBaseTable(BaseTable):
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = SQLModelField(default=None, primary_key=True)
 
     def __hash__(self):
         return hash(self.id)
@@ -94,13 +94,34 @@ class DBQuery(BaseModel):
 
 class FilterQuery(BaseModel):
     query: list[DBQuery] = Field(default_factory=list)
-    relation_model: bool = False
+    count: bool = False
+    or_query: list[DBQuery] = Field(default_factory=list)
+    # Sort string format: "field:asc" or "field:desc".
+    # Multiple sorts can be applied by separating with commas.
+    # Example: "created_at:desc,name:asc"
     sort: str | None = None
+    sort_first: list[Any] | None = None
+
+    # Relations
+    relation_model: bool = False
+    relations: list[str] | None = None  # e.g. ["job", "job.company"]
+    columns: list[Any] | None = (
+        None  # root cols: [table.id, table.name, ...] — must pass ORM attributes, not .key
+    )
+    relation_cols: dict[str, list[str]] | None = (
+        None  # {"job":["id","title"], "profile":["id","name"]}
+    )
+
+    # Aggregation
+    aggregates: list[tuple[str, Any]] = Field(default_factory=list)
+    joins: list[tuple[Any, Any, bool]] = Field(default_factory=list)
+    group_by: list[Any] = Field(default_factory=list)
+    distinct_on: list[Any] | None = None
 
 
 class Pagination(BaseModel):
-    limit: int = PydanticField(0, ge=0)
-    offset: int = PydanticField(0, ge=0)
+    limit: int = Field(0, ge=0)
+    offset: int = Field(0, ge=0)
 
 
 class Token(BaseModel):

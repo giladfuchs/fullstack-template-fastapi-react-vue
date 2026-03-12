@@ -33,7 +33,7 @@ const itemsSearching = computed<AGTableModelType[]>(() => {
 
 const init = async () => {
   if (model.value) {
-    await store.fetchRows(model.value, { relation_model: true });
+    await store.fetchRows(model.value, { relation_model: true, relations: ['assignments'] });
   }
 };
 

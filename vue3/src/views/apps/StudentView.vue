@@ -19,7 +19,8 @@ const init = async () => {
     const data = (await fetchRowById({
       model: ModelType.student,
       id: student_id.value,
-      relation: true
+      relation: true,
+      relations: ['assignments']
     })) as Student;
 
     student.value = data;

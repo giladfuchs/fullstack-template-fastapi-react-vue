@@ -13,7 +13,7 @@ class AssignmentPayload(BaseModel):
 class StudentPayload(BaseModel):
     name: str
     grade: Grade
-    phone: float
+    phone: str
 
 
 class FullStudentPayload(StudentPayload):
@@ -23,4 +23,4 @@ class FullStudentPayload(StudentPayload):
 
 class TeacherPayload(BaseModel):
     id: int
-    phone: float
+    phone: str

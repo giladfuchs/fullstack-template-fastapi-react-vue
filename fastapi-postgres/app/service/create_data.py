@@ -16,7 +16,7 @@ class FactoryModel:
     def teacher(cls) -> dict:
         return {
             "id": randint(10, 900),
-            "phone": float(randint(10_000_000, 9_999_999_999)),
+            "phone": str(randint(10_000_000, 9_999_999_999)),
         }
 
     @classmethod
@@ -24,7 +24,7 @@ class FactoryModel:
         data = {
             "name": fake.name(),
             "grade": choice(Grade.values()),
-            "phone": float(randint(10**9, 10**10)),
+            "phone": str(randint(10**9, 10**10)),
         }
         if teacher_id is not None:
             data["teacher_id"] = teacher_id

@@ -32,7 +32,7 @@ class Auth(BaseUtils):
         return Depends(_inject_user_filter)
 
     @classmethod
-    async def authenticate_user(cls, _id: int, phone: int) -> Token:
+    async def authenticate_user(cls, _id: int, phone: str) -> Token:
         filter_query = FilterQuery(
             query=[
                 DBQuery(key="id", opt=DBOperator.eq, value=_id),

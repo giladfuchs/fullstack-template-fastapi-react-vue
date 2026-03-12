@@ -63,13 +63,18 @@ API.interceptors.response.use(
   }
 );
 
-export const fetchRowById = async (opts: { model: ModelType; id: number | string; relation?: boolean }): Promise<FormModelType> => {
-  const { model, id, relation } = opts;
+export const fetchRowById = async (opts: {
+  model: ModelType;
+  id: number | string;
+  relation?: boolean;
+  relations?: string[] | null;
+}): Promise<FormModelType> => {
+  const { model, id, relation, relations } = opts;
   const res: AxiosResponse<FormModelType> = await API.post<FormModelType>(
     `/${model}`,
     {
       query: [{ key: 'id', value: typeof id === 'string' ? Number(id) : id, opt: 'eq' }],
-      ...(relation ? { relation_model: true } : {})
+      ...(relation ? { relation_model: true, relations } : {})
     },
     { params: { limit: 1 } }
   );

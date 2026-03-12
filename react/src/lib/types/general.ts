@@ -35,7 +35,17 @@ export interface DBQuery {
     value: string | number;
 }
 
-export interface FilterQuery {
+export type FilterQuery = {
     query?: DBQuery[];
+    count?: boolean;
+    or_query?: DBQuery[];
+
+    // Sort string format: "field:asc" or "field:desc".
+    // Multiple sorts can be applied by separating with commas.
+    // Example: "created_at:desc,name:asc"
+    sort?: string | null;
+
+    // Relations
     relation_model?: boolean;
-}
+    relations?: string[] | null;
+};

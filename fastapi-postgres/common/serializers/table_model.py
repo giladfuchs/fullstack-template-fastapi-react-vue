@@ -7,7 +7,7 @@ from common.serializers import IdBaseTable
 class Teacher(IdBaseTable, table=True):
     __table_args__ = (UniqueConstraint("phone", "id", name="phone_id"),)
 
-    phone: float
+    phone: str
 
     students: list["Student"] | None = Relationship(
         sa_relationship_kwargs={"cascade": "all, delete"},
@@ -29,7 +29,7 @@ class Student(IdBaseTable, table=True):
     name: str
     grade: Grade = Field(sa_type=String, nullable=False)
 
-    phone: float
+    phone: str
 
     assignments: list["Assignment"] | None = Relationship(
         sa_relationship_kwargs={"cascade": "all, delete"},
